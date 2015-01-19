@@ -11,10 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class MainP extends ActionBarActivity {
 
     ListView listView ;
+    DataBaseManager db=new DataBaseManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,10 @@ public class MainP extends ActionBarActivity {
                 "Gruppo4"*/
         };
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        ArrayList<Group> values1 = db.getGroup();
+                //new Group(1,"social",3)
+
+        GroupsAdapter adapter = new GroupsAdapter(this, values1);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);

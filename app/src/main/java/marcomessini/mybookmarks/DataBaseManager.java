@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by marcomessini on 19/01/15.
  */
@@ -45,12 +47,12 @@ public class DataBaseManager {
     }
 
     //aprire connesione DB
-    public void open() throws SQLException {
+    private void open() throws SQLException {
         dbHelper = new SQLiteHelperManager(context);
         db = dbHelper.getWritableDatabase();
     }
     //chiudere connesione DB
-    public void close() {
+    private void close() {
         dbHelper.close();
     }
 
@@ -93,8 +95,18 @@ public class DataBaseManager {
     }
 
     //see table
-    public Cursor fetchAllNameGroup(){
-        return db.query(TABLE_GROUPS, new String[] { KEY_ID, KEY_NAME }, null, null, null, null, null);
+    public ArrayList<Group> getGroup() {
+        open();
+        Cursor cursor = db.query(TABLE_GROUPS, new String[]{KEY_ID, KEY_NAME}, null, null, null, null, null);
+        ArrayList<Group> ris= new ArrayList<Group>();
+        while (cursor.moveToNext()) {
+            int ID = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+            String name= cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            //query numero siti
+            ris.add(new Group(ID,name,0));
+        }
+        close();
+        return ris;
     }
 
 

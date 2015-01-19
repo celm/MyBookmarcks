@@ -6,10 +6,12 @@ package marcomessini.mybookmarks;
 public class Group {
     public int id_group; //id gruppo
     public String name; //nome gruppo
+    public int NSiti; //numero siti
 
 
-    public Group(int id_group , String name ,int id_ws , String url_ws) {
+    public Group(int id_group , String name ,int NSiti) {
         this.id_group = id_group;
         this.name = name;
+        this.NSiti = NSiti;
     }
 }
