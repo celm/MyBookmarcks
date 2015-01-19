@@ -15,9 +15,9 @@ public class DataBaseManager {
     @SuppressWarnings("unused")
     private static final String LOG_TAG = DataBaseManager.class.getSimpleName();
 
-    private Context context;
-    private SQLiteDatabase db;
-    private SQLiteHelperManager dbHelper;
+    private static Context context;
+    private static SQLiteDatabase db;
+    private static SQLiteHelperManager dbHelper;
 
     //nome tabelle
 
@@ -42,22 +42,22 @@ public class DataBaseManager {
 
     private static final String[] COLUMNS_WEBSITE = {KEY_IDWS,KEY_IDG,KEY_NAMEWS,KEY_URL,KEY_HASH};
 
-    public DataBaseManager(Context context) {
-        this.context = context;
+    public DataBaseManager(Context context1) {
+        context = context1;
     }
 
     //aprire connesione DB
-    private void open() throws SQLException {
+    private static void open() throws SQLException {
         dbHelper = new SQLiteHelperManager(context);
         db = dbHelper.getWritableDatabase();
     }
     //chiudere connesione DB
-    private void close() {
+    private static void close() {
         dbHelper.close();
     }
 
     //per tab gruppi
-    private ContentValues createContentValuesG(String name ) {
+    private static ContentValues createContentValuesG(String name ) {
         ContentValues valuesG = new ContentValues();
         valuesG.put( KEY_NAME, name );
 
@@ -65,7 +65,7 @@ public class DataBaseManager {
     }
 
     //per tab website
-    private ContentValues createContentValuesWS(int idG, String url, String nameWS, String hash) {
+    private static ContentValues createContentValuesWS(int idG, String url, String nameWS, String hash) {
         ContentValues valuesWS = new ContentValues();
         valuesWS.put( KEY_IDG, idG );
         valuesWS.put( KEY_NAMEWS, nameWS );
@@ -78,7 +78,7 @@ public class DataBaseManager {
     //funzioni per la tabella gruppi
 
     //add gruppo
-    public long addGroup(String name) {
+    public static long addGroup(String name) {
         ContentValues initialValues = createContentValuesG(name);
         open();
         long res=db.insertOrThrow(TABLE_GROUPS, null, initialValues);
@@ -95,7 +95,7 @@ public class DataBaseManager {
     }
 
     //see table
-    public ArrayList<Group> getGroup() {
+    public static ArrayList<Group> getGroup() {
         open();
         Cursor cursor = db.query(TABLE_GROUPS, new String[]{KEY_ID, KEY_NAME}, null, null, null, null, null);
         ArrayList<Group> ris= new ArrayList<Group>();

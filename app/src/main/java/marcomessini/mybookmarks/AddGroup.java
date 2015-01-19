@@ -32,6 +32,8 @@ public class AddGroup extends ActionBarActivity {
                 //per prendere il nome
                 newNameGroup = nameGroup.getText().toString();
 
+                DataBaseManager.addGroup(newNameGroup);
+
                 Intent ActivityRet = new Intent(AddGroup.this, MainP.class);
                 startActivity(ActivityRet);
             }
