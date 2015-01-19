@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyBookmarks</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_addGroup">Add New Group</string>
+    <string name="action_delGroup">Delete Group</string>
+    <string name="action_addWS">Add New WebSite</string>
+    <string name="action_delWS">Delete WebSite</string>
+    <string name="title_activity_list_web_site">ListWebSIte</string>
+    <string name="title_activity_web_view">WebViewA</string>
+    <string name="title_activity_add_group">AddGroup</string>
+    <string name="title_activity_add_web_site">AddWebSite</string>
+
+</resources>
