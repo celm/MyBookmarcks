@@ -32,7 +32,7 @@ public class ListWebSIte extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.listWS);
 
         //Prova per visualizare nella ListView
-        String[] valuesWS = new String[]{
+        /*String[] valuesWS = new String[]{
                 "Sito1",
                 "Sito2" ,
                 "Sito3" ,
@@ -48,14 +48,17 @@ public class ListWebSIte extends ActionBarActivity {
         final ArrayList<String> listWS = new ArrayList<String>();
         for (int i = 0; i < valuesWS.length; ++i) {
             listWS.add(valuesWS[i]);
-        }
+        }*/
+        ArrayList<WebSite> valuesWS= new ArrayList<WebSite>();
+        valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
+        valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listWS);
+        WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
+
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
