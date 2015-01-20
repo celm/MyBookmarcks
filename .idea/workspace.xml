@@ -43,7 +43,7 @@
       <file leaf-file-name="MainP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/MainP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1230">
+            <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="1230">
               <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
               <folding />
             </state>
@@ -82,15 +82,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataBaseManager.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="DataBaseManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/DataBaseManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="292" max-vertical-offset="2025">
-              <caret line="36" column="51" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.87261146" vertical-offset="1509" max-vertical-offset="2010">
+              <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
               <folding>
                 <element signature="e#335#362#0" expanded="true" />
                 <element signature="e#3012#3019#0" expanded="true" />
-                <element signature="e#3948#3957#0" expanded="true" />
+                <element signature="e#3930#3939#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -109,8 +109,8 @@
       <file leaf-file-name="AddWebSite.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/AddWebSite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
-              <caret line="40" column="66" selection-start-line="40" selection-start-column="66" selection-end-line="40" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="990">
+              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -119,20 +119,20 @@
       <file leaf-file-name="ListWebSIte.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/ListWebSIte.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1200">
-              <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1200">
+              <caret line="39" column="79" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
               <folding>
-                <element signature="e#1477#1889#0" expanded="true" />
-                <element signature="e#1877#1878#0" expanded="true" />
+                <element signature="e#1485#1897#0" expanded="true" />
+                <element signature="e#1885#1886#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WebViewA.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="WebViewA.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/WebViewA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.477707" vertical-offset="0" max-vertical-offset="750">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
               <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
               <folding />
             </state>
@@ -1171,9 +1171,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/AddWebSite.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/MainP.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/SQLiteHelperManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/DataBaseManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/ListWebSIte.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/WebViewA.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/ListWebSIte.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/DataBaseManager.java" />
       </list>
     </option>
   </component>
@@ -1498,7 +1498,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3293011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3293011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1610,7 +1610,7 @@
           <folding>
             <element signature="e#335#362#0" expanded="true" />
             <element signature="e#3012#3019#0" expanded="true" />
-            <element signature="e#3948#3957#0" expanded="true" />
+            <element signature="e#3930#3939#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1628,8 +1628,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1995">
           <caret line="29" column="86" selection-start-line="29" selection-start-column="86" selection-end-line="29" selection-end-column="86" />
           <folding>
-            <element signature="e#1477#1889#0" expanded="true" />
-            <element signature="e#1877#1878#0" expanded="true" />
+            <element signature="e#1485#1897#0" expanded="true" />
+            <element signature="e#1885#1886#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1744,26 +1744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/AddWebSite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="990">
-          <caret line="40" column="66" selection-start-line="40" selection-start-column="66" selection-end-line="40" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/DataBaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="292" max-vertical-offset="2025">
-          <caret line="36" column="51" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="51" />
-          <folding>
-            <element signature="e#335#362#0" expanded="true" />
-            <element signature="e#3012#3019#0" expanded="true" />
-            <element signature="e#3948#3957#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/SQLiteHelperManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="780">
@@ -1776,14 +1756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="570">
           <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/MainP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1230">
-          <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -1804,22 +1776,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/WebViewA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/MainP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1230">
+          <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/AddWebSite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="990">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/ListWebSIte.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1200">
-          <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1200">
+          <caret line="39" column="79" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
           <folding>
-            <element signature="e#1477#1889#0" expanded="true" />
-            <element signature="e#1877#1878#0" expanded="true" />
+            <element signature="e#1485#1897#0" expanded="true" />
+            <element signature="e#1885#1886#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/WebViewA.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/marcomessini/mybookmarks/DataBaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.477707" vertical-offset="0" max-vertical-offset="750">
-          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-          <folding />
+        <state vertical-scroll-proportion="0.87261146" vertical-offset="1509" max-vertical-offset="2010">
+          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="e#335#362#0" expanded="true" />
+            <element signature="e#3012#3019#0" expanded="true" />
+            <element signature="e#3930#3939#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

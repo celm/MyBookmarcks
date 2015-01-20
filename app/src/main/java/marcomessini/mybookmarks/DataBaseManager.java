@@ -121,13 +121,12 @@ public class DataBaseManager {
     }
 
     //show all WS
-    public static ArrayList<WebSite> getWebSite() {
+    public static ArrayList<WebSite> getWebSite(int IDG) {
         open();
-        Cursor cursor= db.query(TABLE_WEBSITE, new String[] { KEY_IDWS, KEY_IDG, KEY_NAMEWS, KEY_URL, KEY_HASH }, null, null, null, null, null);
+        Cursor cursor= db.rawQuery("select * from website where id_group = ?", new String[] { Integer.toString(IDG) });
         ArrayList<WebSite> ris= new ArrayList<WebSite>();
         while (cursor.moveToNext()) {
             int IDWS = cursor.getInt(cursor.getColumnIndex(KEY_IDWS));
-            int IDG = cursor.getInt(cursor.getColumnIndex(KEY_IDG));
             String name= cursor.getString(cursor.getColumnIndex(KEY_NAMEWS));
             String url= cursor.getString(cursor.getColumnIndex(KEY_URL));
             String hash= cursor.getString(cursor.getColumnIndex(KEY_HASH));

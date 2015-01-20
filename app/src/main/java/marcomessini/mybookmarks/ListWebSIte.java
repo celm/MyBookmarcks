@@ -37,7 +37,7 @@ public class ListWebSIte extends ActionBarActivity {
         valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
         valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));*/
 
-        final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite();
+        final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
 
         WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
 
