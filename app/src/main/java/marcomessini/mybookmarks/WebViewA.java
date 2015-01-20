@@ -1,5 +1,6 @@
 package marcomessini.mybookmarks;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,13 +10,18 @@ import android.webkit.WebView;
 
 public class WebViewA extends ActionBarActivity {
 
+    String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
+        Intent intent = getIntent();
+        url= intent.getStringExtra("URL");
+
         WebView myWebView = (WebView) findViewById(R.id.webView);
-        myWebView.loadUrl("http://www.informatica.unipg.it/");
+        myWebView.loadUrl(url);
     }
 
 
