@@ -35,7 +35,7 @@ public class MainP extends ActionBarActivity {
                 "Gruppo4"*/
         };
 
-        ArrayList<Group> values1 = db.getGroup();
+        final ArrayList<Group> values1 = db.getGroup();
                 //new Group(1,"social",3)
 
         GroupsAdapter adapter = new GroupsAdapter(this, values1);
@@ -48,34 +48,18 @@ public class MainP extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-
-
-                switch( position )
-                {
-                    case 0:  Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
-                        startActivity(newActivity);
-                        break;
-                    case 1:  Intent newActivity1 = new Intent(MainP.this, ListWebSIte.class);
-                        startActivity(newActivity1);
-                        break;
-                    case 2:  Intent newActivity2 = new Intent(MainP.this, ListWebSIte.class);
-                        startActivity(newActivity2);
-                        break;
-                    case 3:  Intent newActivity3 = new Intent(MainP.this, ListWebSIte.class);
-                        startActivity(newActivity3);
-                        break;
-                    case 4:  Intent newActivity4 = new Intent(MainP.this, ListWebSIte.class);
-                        startActivity(newActivity4);
-                        break;
-                }
+                values1.get(position);
+                Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
+                newActivity.putExtra("id_gruppo",position);
+                startActivity(newActivity);
                 // ListView Clicked item index
-                int itemPosition = position;
+                //int itemPosition = position;
 
                 // ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(position);
+                //String itemValue = (String) listView.getItemAtPosition(position);
 
                 // Show Alert
-                Toast.makeText(getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
 
             }
 

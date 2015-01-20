@@ -23,6 +23,12 @@ public class ListWebSIte extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_web_site);
 
+        Intent intent = getIntent();
+
+        int idGruppo=intent.getIntExtra("id_gruppo", -1);
+
+        Toast.makeText(getApplicationContext(), ""+idGruppo,Toast.LENGTH_LONG).show();
+
         listView = (ListView) findViewById(R.id.listWS);
 
         //Prova per visualizare nella ListView
