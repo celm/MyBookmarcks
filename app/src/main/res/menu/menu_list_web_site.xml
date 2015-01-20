@@ -5,6 +5,4 @@
 
     <item android:id="@+id/action_addWS" android:title="@string/action_addWS"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_delWS" android:title="@string/action_delWS"
-        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

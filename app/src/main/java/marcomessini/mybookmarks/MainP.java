@@ -87,10 +87,6 @@ public class MainP extends ActionBarActivity {
             startActivity(ActivityAddGroup);
         }
 
-        if (id == R.id.action_delGroup) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }

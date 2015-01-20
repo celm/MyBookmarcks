@@ -22,6 +22,9 @@ public class AddWebSite extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_web_site);
+
+        Intent intent= getIntent();
+        final int id_g=intent.getIntExtra("id_gruppo",-1);
         //edit text name WS
         nameWS = (EditText) findViewById(R.id.editTextAddWSName);
         //edit text url
@@ -34,6 +37,8 @@ public class AddWebSite extends ActionBarActivity {
             public void onClick(View arg0) {
                 //per prendere il nome
                 newNameWS = nameWS.getText().toString();
+                newURL=URL.getText().toString();
+                DataBaseManager.addWebSite(id_g,newURL,newNameWS,"");
 
                 Intent ActivityRet = new Intent(AddWebSite.this, ListWebSIte.class);
                 startActivity(ActivityRet);

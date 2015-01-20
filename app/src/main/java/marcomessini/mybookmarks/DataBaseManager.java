@@ -112,7 +112,7 @@ public class DataBaseManager {
 
     //funzioni tabella WebSite
 
-    public long addWebSite(int idG, String url, String nameWS, String hash){
+    public static long addWebSite(int idG, String url, String nameWS, String hash){
         ContentValues initialValuesWS = createContentValuesWS(idG, url, nameWS, hash);
         open();
         long resW=db.insertOrThrow(TABLE_WEBSITE, null, initialValuesWS);
@@ -121,7 +121,19 @@ public class DataBaseManager {
     }
 
     //show all WS
-    public Cursor fetchAllWS() {
-        return db.query(TABLE_WEBSITE, new String[] { KEY_IDWS, KEY_IDG, KEY_NAMEWS, KEY_URL, KEY_HASH }, null, null, null, null, null);
+    public static ArrayList<WebSite> getWebSite() {
+        open();
+        Cursor cursor= db.query(TABLE_WEBSITE, new String[] { KEY_IDWS, KEY_IDG, KEY_NAMEWS, KEY_URL, KEY_HASH }, null, null, null, null, null);
+        ArrayList<WebSite> ris= new ArrayList<WebSite>();
+        while (cursor.moveToNext()) {
+            int IDWS = cursor.getInt(cursor.getColumnIndex(KEY_IDWS));
+            int IDG = cursor.getInt(cursor.getColumnIndex(KEY_IDG));
+            String name= cursor.getString(cursor.getColumnIndex(KEY_NAMEWS));
+            String url= cursor.getString(cursor.getColumnIndex(KEY_URL));
+            String hash= cursor.getString(cursor.getColumnIndex(KEY_HASH));
+            ris.add(new WebSite(IDWS,IDG,name,url,hash));
+        }
+        close();
+        return ris;
     }
 }

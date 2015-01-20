@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class ListWebSIte extends ActionBarActivity {
 
     ListView listView ;
+    int idGruppo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class ListWebSIte extends ActionBarActivity {
 
         Intent intent = getIntent();
 
-        int idGruppo=intent.getIntExtra("id_gruppo", -1);
+        idGruppo=intent.getIntExtra("id_gruppo", -1);
 
         Toast.makeText(getApplicationContext(), ""+idGruppo,Toast.LENGTH_LONG).show();
 
@@ -49,9 +50,13 @@ public class ListWebSIte extends ActionBarActivity {
         for (int i = 0; i < valuesWS.length; ++i) {
             listWS.add(valuesWS[i]);
         }*/
-        ArrayList<WebSite> valuesWS= new ArrayList<WebSite>();
+
+        //elementi di prova
+        /*ArrayList<WebSite> valuesWS= new ArrayList<WebSite>();
         valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
-        valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));
+        valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));*/
+
+        final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite();
 
         WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
 
@@ -135,10 +140,8 @@ public class ListWebSIte extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_addWS) {
             Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
+            ActivityAddWS.putExtra("id_gruppo",idGruppo);
             startActivity(ActivityAddWS);
-        }
-        if (id == R.id.action_delWS) {
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
