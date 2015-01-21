@@ -87,13 +87,22 @@ public class DataBaseManager {
     }
 
     //delete group
-    public boolean delGroup(String name) {
+    public boolean delGroup(int id) {
         open();
-        boolean res = db.delete(TABLE_GROUPS, KEY_NAME + "=" + "'"+ name +"'", null) > 0;
+        boolean res = db.delete(TABLE_GROUPS, KEY_ID + "=" + id , null) > 0;
         close();
         return res;
     }
 
+    //elimina i siti con gruppo id = id
+    public boolean delWsOfGroup(int id) {
+        open();
+        boolean res= db.delete(TABLE_WEBSITE, KEY_IDG + "=" + id , null) > 0;
+        close();
+        return res;
+    }
+
+    //
     //see table
     public static ArrayList<Group> getGroup() {
         open();
@@ -135,4 +144,5 @@ public class DataBaseManager {
         close();
         return ris;
     }
+
 }

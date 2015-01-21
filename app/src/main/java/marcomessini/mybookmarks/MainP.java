@@ -1,5 +1,9 @@
 package marcomessini.mybookmarks;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,17 +32,17 @@ public class MainP extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
 
         //Prova per visualizare nella ListView
-        String[] values = new String[]{
+       /* String[] values = new String[]{
                 "Gruppo1",
-                "Gruppo2" /*,
+                "Gruppo2" *//*,
                 "Gruppo3" ,
-                "Gruppo4"*/
-        };
+                "Gruppo4"*//*
+        };*/
 
         final ArrayList<Group> values1 = db.getGroup();
                 //new Group(1,"social",3)
 
-        GroupsAdapter adapter = new GroupsAdapter(this, values1);
+        final GroupsAdapter adapter = new GroupsAdapter(this, values1);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -63,6 +67,32 @@ public class MainP extends ActionBarActivity {
 
             }
 
+        });
+
+        //per eliminare il gruppo pressione prolungata
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(MainP.this)
+                        .setTitle("Delete Group")
+                        .setMessage("Are you sure you want to delete this group?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //funzione per eliminare il gruppo
+                                db.delGroup(position);
+                                db.delWsOfGroup(position);
+                                adapter.remove(adapter.getItem(position));
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .show();
+                return true;
+            }
         });
     }
 
