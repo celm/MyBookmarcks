@@ -18,6 +18,7 @@ public class ListWebSIte extends ActionBarActivity {
 
     ListView listView ;
     int idGruppo;
+    int idListWS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class ListWebSIte extends ActionBarActivity {
         Intent intent = getIntent();
 
         idGruppo=intent.getIntExtra("id_gruppo", -1);
+
+        Intent intentListWS = getIntent();
+        idListWS=intentListWS.getIntExtra("id_list",-1);
 
         Toast.makeText(getApplicationContext(), ""+idGruppo,Toast.LENGTH_LONG).show();
 
@@ -76,6 +80,7 @@ public class ListWebSIte extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_addWS) {
             Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
+            ActivityAddWS.putExtra("id_list",idListWS);
             ActivityAddWS.putExtra("id_gruppo",idGruppo);
             startActivity(ActivityAddWS);
         }
