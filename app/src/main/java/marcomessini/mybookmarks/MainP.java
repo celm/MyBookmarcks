@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MainP extends ActionBarActivity {
 
     ListView listView ;
     DataBaseManager db=new DataBaseManager(this);
+    GroupsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class MainP extends ActionBarActivity {
         final ArrayList<Group> values1 = db.getGroup();
                 //new Group(1,"social",3)
 
-        final GroupsAdapter adapter = new GroupsAdapter(this, values1);
+        adapter = new GroupsAdapter(this, values1);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -52,9 +54,9 @@ public class MainP extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                values1.get(position);
+                int idG=values1.get(position).id_group;
                 Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
-                newActivity.putExtra("id_gruppo",position);
+                newActivity.putExtra("id_gruppo",idG);
                 startActivity(newActivity);
                 // ListView Clicked item index
                 //int itemPosition = position;
@@ -79,10 +81,11 @@ public class MainP extends ActionBarActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //funzione per eliminare il gruppo
-                                db.delGroup(position);
-                                db.delWsOfGroup(position);
+                                int idGroup=values1.get(position).id_group;
+                                boolean valG=db.delGroup(idGroup);
+                                Log.i("valore query delG",Boolean.toString(valG));
                                 adapter.remove(adapter.getItem(position));
-                                adapter.notifyDataSetChanged();
+                                //adapter.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -94,6 +97,23 @@ public class MainP extends ActionBarActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                //recupero i dati
+                String name=data.getStringExtra("newNameGroup");
+                //eseguo la query di inserimento
+                long idWS=DataBaseManager.addGroup(name);
+                //inserisci dentro il content value
+                int id_G=(int)idWS;
+                adapter.add(new Group(id_G,name,0));
+            }
+            if (resultCode == RESULT_CANCELED) {
+            }
+        }
     }
 
 
@@ -114,7 +134,7 @@ public class MainP extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_addGroup) {
             Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
-            startActivity(ActivityAddGroup);
+            startActivityForResult(ActivityAddGroup, 1);
         }
 
         return super.onOptionsItemSelected(item);

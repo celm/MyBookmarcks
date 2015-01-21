@@ -88,16 +88,20 @@ public class DataBaseManager {
 
     //delete group
     public boolean delGroup(int id) {
+        String id_g=Integer.toString(id);
+        String[] id_ag={id_g};
         open();
-        boolean res = db.delete(TABLE_GROUPS, KEY_ID + "=" + id , null) > 0;
+        boolean res = db.delete(TABLE_GROUPS, KEY_ID + "=?", id_ag) > 0;
         close();
         return res;
     }
 
     //elimina i siti con gruppo id = id
     public boolean delWsOfGroup(int id) {
+        String id_str=Integer.toString(id);
+        String[] id_s= {id_str};
         open();
-        boolean res= db.delete(TABLE_WEBSITE, KEY_IDG + "=" + id , null) > 0;
+        boolean res= db.delete(TABLE_WEBSITE, KEY_IDG +"=?", id_s) > 0;
         close();
         return res;
     }

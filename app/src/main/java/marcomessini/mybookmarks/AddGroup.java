@@ -31,11 +31,12 @@ public class AddGroup extends ActionBarActivity {
             public void onClick(View arg0) {
                 //per prendere il nome
                 newNameGroup = nameGroup.getText().toString();
-
-                DataBaseManager.addGroup(newNameGroup);
-
-                Intent ActivityRet = new Intent(AddGroup.this, MainP.class);
-                startActivity(ActivityRet);
+                /*Intent ActivityRet = new Intent(AddGroup.this, MainP.class);
+                startActivity(ActivityRet);*/
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("newNameGroup",newNameGroup);
+                setResult(RESULT_OK,returnIntent);
+                finish();
             }
         });
     }

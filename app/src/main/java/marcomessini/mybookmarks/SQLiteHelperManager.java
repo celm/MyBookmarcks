@@ -26,7 +26,7 @@ public class SQLiteHelperManager extends SQLiteOpenHelper{
 
         String CREATE_WEBSITE_TABLE = "CREATE TABLE website (" +
                 "id_ws INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "id_group INTEGER, " +
+                "id_group INTEGER REFERENCES groups(id) ON DELETE CASCADE, " +
                 "nameWS TEXT, " +
                 "url TEXT, " +
                 "hash TEXT )";

@@ -38,12 +38,18 @@ public class AddWebSite extends ActionBarActivity {
                 //per prendere il nome
                 newNameWS = nameWS.getText().toString();
                 newURL=URL.getText().toString();
-                DataBaseManager.addWebSite(id_g,newURL,newNameWS,"");
+
 
                 //per tornare all'activity precedente
-                Intent ActivityRet= new Intent(AddWebSite.this, ListWebSIte.class);
+                /*Intent ActivityRet= new Intent(AddWebSite.this, ListWebSIte.class);
                 ActivityRet.putExtra("id_gruppo",id_g);
-                startActivity(ActivityRet);
+                startActivity(ActivityRet);*/
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("id_g",id_g);
+                returnIntent.putExtra("newURL",newURL);
+                returnIntent.putExtra("newNameWS",newNameWS);
+                setResult(RESULT_OK,returnIntent);
+                finish();
             }
         });
     }

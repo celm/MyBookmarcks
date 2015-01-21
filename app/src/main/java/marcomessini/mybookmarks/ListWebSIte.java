@@ -22,6 +22,7 @@ public class ListWebSIte extends ActionBarActivity {
     int idGruppo;
     int idListWS;
     DataBaseManager db= new DataBaseManager(this);
+    WebSiteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ListWebSIte extends ActionBarActivity {
 
         final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
 
-        final WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
+        adapter = new WebSiteAdapter(this, valuesWS);
 
 
         // Assign adapter to ListView
@@ -94,6 +95,25 @@ public class ListWebSIte extends ActionBarActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                //recupero i dati
+                int gruppo=data.getIntExtra("id_g",-1);
+                String url=data.getStringExtra("newURL");
+                String nameWS=data.getStringExtra("newNameWS");
+                //eseguo la query di inserimento
+                long idWS=DataBaseManager.addWebSite(gruppo,url,nameWS,"");
+                //inserisci dentro il content value
+                int id_WS=(int)idWS;
+                adapter.add(new WebSite(id_WS,gruppo,nameWS,url,""));
+            }
+            if (resultCode == RESULT_CANCELED) {
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_list_web_site, menu);
@@ -112,7 +132,8 @@ public class ListWebSIte extends ActionBarActivity {
             Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
             ActivityAddWS.putExtra("id_list",idListWS);
             ActivityAddWS.putExtra("id_gruppo",idGruppo);
-            startActivity(ActivityAddWS);
+            //activity for result
+            startActivityForResult(ActivityAddWS, 1);
         }
 
         return super.onOptionsItemSelected(item);
