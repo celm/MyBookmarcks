@@ -77,7 +77,7 @@ public class ListWebSIte extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //funzione per eliminare il sito
                                 int id_ws=valuesWS.get(position).id_WebSite;
-                                db.delWsOfGroup(id_ws);
+                                db.delWebSite(id_ws);
                                 //refresh dell'activity
                                 adapter.remove(adapter.getItem(position));
                                 adapter.notifyDataSetChanged();

@@ -97,11 +97,11 @@ public class DataBaseManager {
     }
 
     //elimina i siti con gruppo id = id
-    public boolean delWsOfGroup(int id) {
+    public boolean delWebSite(int id) {
         String id_str=Integer.toString(id);
         String[] id_s= {id_str};
         open();
-        boolean res= db.delete(TABLE_WEBSITE, KEY_IDG +"=?", id_s) > 0;
+        boolean res= db.delete(TABLE_WEBSITE, KEY_IDWS +"=?", id_s) > 0;
         close();
         return res;
     }
