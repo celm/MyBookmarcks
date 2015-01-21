@@ -1,5 +1,7 @@
 package marcomessini.mybookmarks;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ public class ListWebSIte extends ActionBarActivity {
     ListView listView ;
     int idGruppo;
     int idListWS;
+    DataBaseManager db= new DataBaseManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class ListWebSIte extends ActionBarActivity {
 
         final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
 
-        WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
+        final WebSiteAdapter adapter = new WebSiteAdapter(this, valuesWS);
 
 
         // Assign adapter to ListView
@@ -60,6 +63,33 @@ public class ListWebSIte extends ActionBarActivity {
                 startActivity(newActivity);
             }
 
+        });
+
+        //per eliminare i siti
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(ListWebSIte.this)
+                        .setTitle("Delete Web Site")
+                        .setMessage("Are you sure you want to delete this web site?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //funzione per eliminare il sito
+                                int id_ws=valuesWS.get(position).id_WebSite;
+                                db.delWsOfGroup(id_ws);
+                                //refresh dell'activity
+                                adapter.remove(adapter.getItem(position));
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .show();
+                return true;
+            }
         });
     }
 
