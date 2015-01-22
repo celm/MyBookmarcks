@@ -33,10 +33,16 @@ public class AddGroup extends ActionBarActivity {
                 newNameGroup = nameGroup.getText().toString();
                 /*Intent ActivityRet = new Intent(AddGroup.this, MainP.class);
                 startActivity(ActivityRet);*/
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("newNameGroup",newNameGroup);
-                setResult(RESULT_OK,returnIntent);
-                finish();
+                boolean nameG= newNameGroup.isEmpty();
+                if(!nameG){
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("newNameGroup",newNameGroup);
+                    setResult(RESULT_OK,returnIntent);
+                    finish();
+                }
+                else{
+                    //non fare niente
+                }
             }
         });
     }

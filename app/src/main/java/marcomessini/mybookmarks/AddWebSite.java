@@ -3,11 +3,18 @@ package marcomessini.mybookmarks;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.net.URL;
 
 
 public class AddWebSite extends ActionBarActivity {
@@ -44,12 +51,29 @@ public class AddWebSite extends ActionBarActivity {
                 /*Intent ActivityRet= new Intent(AddWebSite.this, ListWebSIte.class);
                 ActivityRet.putExtra("id_gruppo",id_g);
                 startActivity(ActivityRet);*/
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("id_g",id_g);
-                returnIntent.putExtra("newURL",newURL);
-                returnIntent.putExtra("newNameWS",newNameWS);
-                setResult(RESULT_OK,returnIntent);
-                finish();
+                boolean name=newNameWS.isEmpty();
+                boolean url=newURL.isEmpty();
+                if (!name && !url){
+                    if (!newURL.contains("http://"))
+                        newURL = "http://" + newURL;
+
+                    URL urlW;
+                    try {
+                        urlW = new URL(newURL);
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("id_g",id_g);
+                        returnIntent.putExtra("newURL",newURL);
+                        returnIntent.putExtra("newNameWS",newNameWS);
+                        setResult(RESULT_OK,returnIntent);
+                        finish();
+                    } catch (MalformedURLException e) {
+                        Toast.makeText(getApplicationContext(),"The value is not an URL",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                else{
+                    //stringhe nn inserite(non fare niente)
+                }
             }
         });
     }
@@ -77,3 +101,4 @@ public class AddWebSite extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
