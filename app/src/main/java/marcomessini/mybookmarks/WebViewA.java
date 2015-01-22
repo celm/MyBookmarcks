@@ -6,21 +6,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class WebViewA extends ActionBarActivity {
 
     String url;
+    private WebView myWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
+        myWebView = (WebView) findViewById(R.id.webView);
+        myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.getSettings().setLoadsImagesAutomatically(true);
+
         Intent intent = getIntent();
         url= intent.getStringExtra("URL");
 
-        WebView myWebView = (WebView) findViewById(R.id.webView);
+        myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
     }
 
