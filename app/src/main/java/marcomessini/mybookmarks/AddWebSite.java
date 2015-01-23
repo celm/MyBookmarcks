@@ -19,6 +19,8 @@ import java.net.URL;
 
 import java.net.URL;
 
+import static marcomessini.mybookmarks.DownloadWS.startAsyncTask;
+
 
 public class AddWebSite extends ActionBarActivity {
 
@@ -63,6 +65,15 @@ public class AddWebSite extends ActionBarActivity {
                     URL urlW;
                     try {
                         urlW = new URL(newURL);
+                        ConnectivityManager connMgr = (ConnectivityManager)
+                                getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                        if (networkInfo != null && networkInfo.isConnected()) {
+                            startAsyncTask(newURL);
+                        } else {
+                            //add toast
+                            //textView.setText("No network connection available.");
+                        }
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("id_g",id_g);
                         returnIntent.putExtra("newURL",newURL);
@@ -104,18 +115,5 @@ public class AddWebSite extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void myClickHandler(View view) {
-        // Gets the URL from the UI's text field.
-        String stringUrl = URL.getText().toString();
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWS.DownloadWebpageTask().execute(stringUrl);
-        } else {
-            //textView.setText("No network connection available.");
-        }
-    }
 }
 

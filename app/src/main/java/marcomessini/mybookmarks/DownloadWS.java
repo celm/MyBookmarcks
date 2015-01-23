@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +36,7 @@ public class DownloadWS {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            //textView.setText(result);
+            Log.e("String di ritorno",result);
         }
     }
 
@@ -43,7 +44,7 @@ public class DownloadWS {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
-        int len = 500;
+        int len = 50000;
 
         try {
             URL url = new URL(myurl);
@@ -77,6 +78,9 @@ public class DownloadWS {
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
+    }
+    public static void startAsyncTask(String stringUrl){
+        new DownloadWebpageTask().execute(stringUrl);
     }
 }
 
