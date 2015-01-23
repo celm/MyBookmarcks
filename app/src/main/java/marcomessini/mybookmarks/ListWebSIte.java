@@ -50,9 +50,13 @@ public class ListWebSIte extends ActionBarActivity {
 
         adapter = new WebSiteAdapter(this, valuesWS);
 
+        String name=valuesWS.get(idGruppo).name;
+
+
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
+
 
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,10 +108,10 @@ public class ListWebSIte extends ActionBarActivity {
                 String url=data.getStringExtra("newURL");
                 String nameWS=data.getStringExtra("newNameWS");
                 //eseguo la query di inserimento
-                long idWS=DataBaseManager.addWebSite(gruppo,url,nameWS,"");
+                long idWS=DataBaseManager.addWebSite(gruppo,url,nameWS,"",0);
                 //inserisci dentro il content value
                 int id_WS=(int)idWS;
-                adapter.add(new WebSite(id_WS,gruppo,nameWS,url,""));
+                adapter.add(new WebSite(id_WS,gruppo,nameWS,url,"",0));
             }
             if (resultCode == RESULT_CANCELED) {
             }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,6 +28,17 @@ public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.custom_layout_site, parent, false);
+        CheckedTextView checkedTextView=(CheckedTextView) rowView.findViewById(R.id.checkWS);
+        //controllo se il sito è aggiornato
+        int check=valuesWS.get(position).check;
+        if(check==1){
+            checkedTextView.setBackgroundColor(-16711936);
+            //background verde
+        }
+        else{
+            checkedTextView.setBackgroundColor(-65536);
+            //background rosso
+        }
         TextView textView = (TextView) rowView.findViewById(R.id.website);
         TextView textView1 = (TextView) rowView.findViewById(R.id.websiteurl);
         textView.setText(valuesWS.get(position).name);

@@ -48,7 +48,21 @@
         android:textColor="#343434"
         android:textSize="12dip" />
 
-    <!--bottone per eliminare gruppo-->
+    <!--verifica se il sito è aggiornato
+        rosso=no, verde=si-->
+    <CheckedTextView
+        android:id="@+id/checkBox1"
+        android:background="#ff0b04"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="UpToDate"
+        android:textColor="#dfe8d5"
+        android:textStyle="bold"/>
+
+
     <!--<Button
         android:id="@+id/delete_btn"
         android:layout_width="wrap_content"

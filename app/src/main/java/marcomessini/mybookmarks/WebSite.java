@@ -11,13 +11,15 @@ public class WebSite {
     public String name;
     public String URL;
     public String hash;
+    public int check;
 
 
-    public WebSite(int id_WebSite , int id_Groups , String name, String URL, String hash) {
+    public WebSite(int id_WebSite , int id_Groups , String name, String URL, String hash, int check) {
         this.id_WebSite = id_WebSite;
         this.id_Groups = id_Groups;
         this.name = name;
         this.URL = URL;
         this.hash = hash;
+        this.check = check;
     }
 }

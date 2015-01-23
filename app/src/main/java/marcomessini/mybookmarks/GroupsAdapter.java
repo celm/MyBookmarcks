@@ -30,7 +30,7 @@ public class GroupsAdapter extends ArrayAdapter<Group> {
             View rowView = inflater.inflate(R.layout.custom_layout, parent, false);
             TextView textView = (TextView) rowView.findViewById(R.id.title);
             TextView textView1 = (TextView) rowView.findViewById(R.id.description);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
+            //ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
             textView.setText(values.get(position).name);
             textView1.setText(""+values.get(position).NSiti);
 
