@@ -50,7 +50,7 @@ public class ListWebSIte extends ActionBarActivity {
 
         adapter = new WebSiteAdapter(this, valuesWS);
 
-        String name=valuesWS.get(idGruppo).name;
+        //String name=valuesWS.get(idGruppo).name;
 
 
 

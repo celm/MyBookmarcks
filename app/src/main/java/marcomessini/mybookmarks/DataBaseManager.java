@@ -117,8 +117,9 @@ public class DataBaseManager {
         while (cursor.moveToNext()) {
             int ID = cursor.getInt(cursor.getColumnIndex(KEY_ID));
             String name= cursor.getString(cursor.getColumnIndex(KEY_NAME));
-            //query numero siti
-            ris.add(new Group(ID,name,0));
+            Cursor cursorWS= db.rawQuery("select * from website where id_group = ?", new String[] { Integer.toString(ID) });
+            int risCount=cursorWS.getCount();
+            ris.add(new Group(ID,name,risCount));
         }
         close();
         return ris;

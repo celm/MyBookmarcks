@@ -44,6 +44,7 @@ public class MainP extends ActionBarActivity {
         final ArrayList<Group> values1 = db.getGroup();
                 //new Group(1,"social",3)
 
+
         adapter = new GroupsAdapter(this, values1);
 
         // Assign adapter to ListView
@@ -109,6 +110,7 @@ public class MainP extends ActionBarActivity {
                 long idWS=DataBaseManager.addGroup(name);
                 //inserisci dentro il content value
                 int id_G=(int)idWS;
+
                 adapter.add(new Group(id_G,name,0));
             }
             if (resultCode == RESULT_CANCELED) {
