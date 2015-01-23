@@ -20,23 +20,8 @@ import java.net.URL;
  */
 public class DownloadWS {
 
-    public DownloadWS(){};
 
-    //da aggiungere all'activity
-    /*public void myClickHandler(View view) {
-        // Gets the URL from the UI's text field.
-        String stringUrl = urlText.getText().toString();
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask().execute(stringUrl);
-        } else {
-            textView.setText("No network connection available.");
-        }
-    }*/
-
-    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+    public static class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
 
@@ -94,3 +79,4 @@ public class DownloadWS {
         return new String(buffer);
     }
 }
+

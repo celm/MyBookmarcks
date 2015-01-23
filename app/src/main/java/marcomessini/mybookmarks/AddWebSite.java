@@ -1,6 +1,9 @@
 package marcomessini.mybookmarks;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,6 +102,20 @@ public class AddWebSite extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void myClickHandler(View view) {
+        // Gets the URL from the UI's text field.
+        String stringUrl = URL.getText().toString();
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new DownloadWS.DownloadWebpageTask().execute(stringUrl);
+        } else {
+            //textView.setText("No network connection available.");
+        }
     }
 }
 
