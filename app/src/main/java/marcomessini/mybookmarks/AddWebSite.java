@@ -20,10 +20,10 @@ import java.net.URL;
 import java.net.URL;
 
 import static marcomessini.mybookmarks.DownloadWS.giveHash;
-import static marcomessini.mybookmarks.DownloadWS.startAsyncTask;
+import static marcomessini.mybookmarks.DownloadWS.DownloadWebpageTask;
 
 
-public class AddWebSite extends ActionBarActivity{
+public class AddWebSite extends ActionBarActivity implements TaskCallback{
 
     EditText nameWS;
     EditText URL;
@@ -31,14 +31,18 @@ public class AddWebSite extends ActionBarActivity{
     public static String newNameWS;
     public static String newURL;
     public static int hash;
+    public static int id_g;
+    DownloadWebpageTask mt = new DownloadWebpageTask(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_web_site);
 
+
+
         final Intent intent= getIntent();
-        final int id_g=intent.getIntExtra("id_gruppo",-1);
+        id_g=intent.getIntExtra("id_gruppo",-1);
         //edit text name WS
         nameWS = (EditText) findViewById(R.id.editTextAddWSName);
         //edit text url
@@ -52,7 +56,6 @@ public class AddWebSite extends ActionBarActivity{
                 //per prendere il nome
                 newNameWS = nameWS.getText().toString();
                 newURL=URL.getText().toString();
-
 
                 //per tornare all'activity precedente
                 /*Intent ActivityRet= new Intent(AddWebSite.this, ListWebSIte.class);
@@ -71,21 +74,14 @@ public class AddWebSite extends ActionBarActivity{
                                 getSystemService(Context.CONNECTIVITY_SERVICE);
                         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                         if (networkInfo != null && networkInfo.isConnected()) {
-                            startAsyncTask(newURL);
-                            //DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(newURL);
-                            //mt.execute();
+                            //startAsyncTask(newURL);
+                            mt.execute(newURL);
 
                         } else {
                             //add toast
                             //textView.setText("No network connection available.");
                         }
-                        hash=giveHash();
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("id_g",id_g);
-                        returnIntent.putExtra("newURL",newURL);
-                        returnIntent.putExtra("newNameWS",newNameWS);
-                        returnIntent.putExtra("hashCode",hash);
-                        setResult(RESULT_OK, returnIntent);
+
 
 
                     } catch (MalformedURLException e) {
@@ -98,6 +94,18 @@ public class AddWebSite extends ActionBarActivity{
                 }
             }
         });
+    }
+
+    //implemento done() per passare dati e terminare l'activity
+    public void done() {
+        hash=giveHash();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("id_g",id_g);
+        returnIntent.putExtra("newURL",newURL);
+        returnIntent.putExtra("newNameWS",newNameWS);
+        returnIntent.putExtra("hashCode",hash);
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
 
@@ -119,12 +127,6 @@ public class AddWebSite extends ActionBarActivity{
 
 
         return super.onOptionsItemSelected(item);
-    }
-    public static void FinishAfterAsyncTask()
-    {
-        Context ctx = null;
-        ctx.getApplicationContext();
-       // ctx.finish();
     }
 
 }
