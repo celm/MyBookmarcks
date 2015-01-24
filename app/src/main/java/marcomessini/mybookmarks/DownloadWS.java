@@ -26,10 +26,17 @@ public class DownloadWS {
     public static int hash;
     public static Context contextAddWS;
 
+
     public static class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+        /*private TaskCallback mCallback;
+
+        public DownloadWebpageTask(TaskCallback callback) {
+
+            mCallback = callback;
+        }*/
+
         @Override
         protected String doInBackground(String... urls) {
-
             // params comes from the execute() call: params[0] is the url.
             try {
                 String pars= downloadUrl(urls[0]);
@@ -44,7 +51,8 @@ public class DownloadWS {
         @Override
         protected void onPostExecute(String result) {
             Log.e("HASH CODE",""+hash);
-
+            //mCallback.done();
+            AddWebSite.FinishAfterAsyncTask();
         }
     }
 
@@ -99,6 +107,7 @@ public class DownloadWS {
         new DownloadWebpageTask().execute(stringUrl);
     }
     public static int giveHash(){
+        Log.e("hash inviato",""+hash);
         return hash;
     }
 }

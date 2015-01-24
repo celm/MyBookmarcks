@@ -28,6 +28,7 @@ public class WebViewA extends ActionBarActivity {
 
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
+        setTitle("pagina");
     }
 
 

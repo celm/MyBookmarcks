@@ -23,7 +23,7 @@ import static marcomessini.mybookmarks.DownloadWS.giveHash;
 import static marcomessini.mybookmarks.DownloadWS.startAsyncTask;
 
 
-public class AddWebSite extends ActionBarActivity {
+public class AddWebSite extends ActionBarActivity{
 
     EditText nameWS;
     EditText URL;
@@ -72,6 +72,9 @@ public class AddWebSite extends ActionBarActivity {
                         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                         if (networkInfo != null && networkInfo.isConnected()) {
                             startAsyncTask(newURL);
+                            //DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(newURL);
+                            //mt.execute();
+
                         } else {
                             //add toast
                             //textView.setText("No network connection available.");
@@ -82,8 +85,9 @@ public class AddWebSite extends ActionBarActivity {
                         returnIntent.putExtra("newURL",newURL);
                         returnIntent.putExtra("newNameWS",newNameWS);
                         returnIntent.putExtra("hashCode",hash);
-                        setResult(RESULT_OK,returnIntent);
-                        finish();
+                        setResult(RESULT_OK, returnIntent);
+
+
                     } catch (MalformedURLException e) {
                         Toast.makeText(getApplicationContext(),"The value is not an URL",Toast.LENGTH_LONG).show();
                     }
@@ -115,6 +119,12 @@ public class AddWebSite extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+    public static void FinishAfterAsyncTask()
+    {
+        Context ctx = null;
+        ctx.getApplicationContext();
+       // ctx.finish();
     }
 
 }
