@@ -52,6 +52,28 @@ public class ListWebSIte extends ActionBarActivity {
 
         final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
 
+        //controllo se vuoto
+        if (valuesWS.isEmpty()){
+            Log.e("ArrayList Gruppo","vuoto");
+            new AlertDialog.Builder(ListWebSIte.this)
+                    .setTitle("There aren't WebSite")
+                    .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
+                            ActivityAddWS.putExtra("id_list",idListWS);
+                            ActivityAddWS.putExtra("id_gruppo",idGruppo);
+                            //activity for result
+                            startActivityForResult(ActivityAddWS, 1);
+                        }
+                    })
+                    /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })*/
+                    .show();
+        };
+
         adapter = new WebSiteAdapter(this, valuesWS);
 
 

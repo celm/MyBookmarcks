@@ -30,6 +30,7 @@ public class MainP extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_p);
 
+        setTitle("MyBookmarks -GROUP LIST-");
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
@@ -43,6 +44,26 @@ public class MainP extends ActionBarActivity {
 
         final ArrayList<Group> values1 = db.getGroup();
                 //new Group(1,"social",3)
+        if (values1.isEmpty()){
+            Log.e("ArrayList Gruppo","vuoto");
+            new AlertDialog.Builder(MainP.this)
+                    .setTitle("There aren't Grups")
+                    .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
+                            startActivityForResult(ActivityAddGroup, 1);
+                        }
+                    })
+                    /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })*/
+                    .show();
+        };
+
+
+
 
 
         adapter = new GroupsAdapter(this, values1);
