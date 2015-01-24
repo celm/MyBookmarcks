@@ -23,6 +23,7 @@ public class ListWebSIte extends ActionBarActivity {
     ListView listView ;
     int idGruppo;
     int idListWS;
+    String nameGroup;
     DataBaseManager db= new DataBaseManager(this);
     WebSiteAdapter adapter;
 
@@ -34,6 +35,8 @@ public class ListWebSIte extends ActionBarActivity {
         Intent intent = getIntent();
 
         idGruppo=intent.getIntExtra("id_gruppo", -1);
+        nameGroup=intent.getStringExtra("nome_gruppo");
+        setTitle("Group "+nameGroup);
 
         Intent intentListWS = getIntent();
         idListWS=intentListWS.getIntExtra("id_list",-1);
@@ -51,7 +54,7 @@ public class ListWebSIte extends ActionBarActivity {
 
         adapter = new WebSiteAdapter(this, valuesWS);
 
-        //String name=valuesWS.get(idGruppo).name;
+
 
 
 
@@ -65,8 +68,10 @@ public class ListWebSIte extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 String url=valuesWS.get(position).URL;
+                String nome=valuesWS.get(position).name;
                 Intent newActivity = new Intent(ListWebSIte.this, WebViewA.class);
                 newActivity.putExtra("URL",url);
+                newActivity.putExtra("nomeSito",nome);
                 startActivity(newActivity);
             }
 

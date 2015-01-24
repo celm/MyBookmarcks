@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 public class WebViewA extends ActionBarActivity {
 
     String url;
+    String nome;
     private WebView myWebView;
 
     @Override
@@ -25,10 +26,12 @@ public class WebViewA extends ActionBarActivity {
 
         Intent intent = getIntent();
         url= intent.getStringExtra("URL");
+        nome= intent.getStringExtra("nomeSito");
+        setTitle("WebSite "+nome);
 
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
-        setTitle("pagina");
+
     }
 
 

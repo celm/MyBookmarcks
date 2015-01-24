@@ -56,8 +56,10 @@ public class MainP extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 int idG=values1.get(position).id_group;
+                String nomeGroup=values1.get(position).name;
                 Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
                 newActivity.putExtra("id_gruppo",idG);
+                newActivity.putExtra("nome_gruppo",nomeGroup);
                 startActivity(newActivity);
                 // ListView Clicked item index
                 //int itemPosition = position;
