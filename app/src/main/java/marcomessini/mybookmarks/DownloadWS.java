@@ -1,5 +1,6 @@
 package marcomessini.mybookmarks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,6 +23,8 @@ import java.net.URL;
  */
 public class DownloadWS {
 
+    public static int hash;
+    public static Context contextAddWS;
 
     public static class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
@@ -28,7 +32,10 @@ public class DownloadWS {
 
             // params comes from the execute() call: params[0] is the url.
             try {
-                return downloadUrl(urls[0]);
+                String pars= downloadUrl(urls[0]);
+                hash=pars.hashCode();
+                return pars;
+
             } catch (IOException e) {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
@@ -36,7 +43,8 @@ public class DownloadWS {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Log.e("String di ritorno",result);
+            Log.e("HASH CODE",""+hash);
+
         }
     }
 
@@ -44,7 +52,7 @@ public class DownloadWS {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
-        int len = 50000;
+        //int len = 50000;
 
         try {
             URL url = new URL(myurl);
@@ -60,7 +68,7 @@ public class DownloadWS {
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is, len);
+            String contentAsString = readIt(is);
             return contentAsString;
 
             // Makes sure that the InputStream is closed after the app is
@@ -72,15 +80,26 @@ public class DownloadWS {
         }
     }
 
-    public static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
+    public static String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
+        //Reader reader = null;
+        //InputStream stream = null;
+        /*char[] buffer = new char[len];
         reader.read(buffer);
-        return new String(buffer);
+        return new String(buffer);*/
+        BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder total = new StringBuilder();
+        String line;
+        while ((line = r.readLine()) != null) {
+            total.append(line);
+        }
+        String ris=total.toString();
+        return ris;
     }
     public static void startAsyncTask(String stringUrl){
         new DownloadWebpageTask().execute(stringUrl);
+    }
+    public static int giveHash(){
+        return hash;
     }
 }
 

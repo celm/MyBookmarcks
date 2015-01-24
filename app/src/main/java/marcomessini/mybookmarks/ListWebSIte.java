@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,11 +108,13 @@ public class ListWebSIte extends ActionBarActivity {
                 int gruppo=data.getIntExtra("id_g",-1);
                 String url=data.getStringExtra("newURL");
                 String nameWS=data.getStringExtra("newNameWS");
+                int hashIns=data.getIntExtra("hashCode",-1);
                 //eseguo la query di inserimento
-                long idWS=DataBaseManager.addWebSite(gruppo,url,nameWS,"",0);
+                long idWS=DataBaseManager.addWebSite(gruppo,url,nameWS,0,0);
                 //inserisci dentro il content value
                 int id_WS=(int)idWS;
-                adapter.add(new WebSite(id_WS,gruppo,nameWS,url,"",0));
+                Log.e("hash inserito",""+hashIns);
+                adapter.add(new WebSite(id_WS,gruppo,nameWS,url,hashIns,0));
             }
             if (resultCode == RESULT_CANCELED) {
             }

@@ -66,7 +66,7 @@ public class DataBaseManager {
     }
 
     //per tab website
-    private static ContentValues createContentValuesWS(int idG, String url, String nameWS, String hash, int check_ws) {
+    private static ContentValues createContentValuesWS(int idG, String url, String nameWS, int hash, int check_ws) {
         ContentValues valuesWS = new ContentValues();
         valuesWS.put( KEY_IDG, idG );
         valuesWS.put( KEY_NAMEWS, nameWS );
@@ -137,7 +137,7 @@ public class DataBaseManager {
 
     //funzioni tabella WebSite
 
-    public static long addWebSite(int idG, String url, String nameWS, String hash, int check_ws){
+    public static long addWebSite(int idG, String url, String nameWS, int hash, int check_ws){
         ContentValues initialValuesWS = createContentValuesWS(idG, url, nameWS, hash, check_ws);
         open();
         long resW=db.insertOrThrow(TABLE_WEBSITE, null, initialValuesWS);
@@ -154,7 +154,7 @@ public class DataBaseManager {
             int IDWS = cursor.getInt(cursor.getColumnIndex(KEY_IDWS));
             String name= cursor.getString(cursor.getColumnIndex(KEY_NAMEWS));
             String url= cursor.getString(cursor.getColumnIndex(KEY_URL));
-            String hash= cursor.getString(cursor.getColumnIndex(KEY_HASH));
+            int hash= cursor.getInt(cursor.getColumnIndex(KEY_HASH));
             int check= cursor.getInt(cursor.getColumnIndex(KEY_CHECK));
             ris.add(new WebSite(IDWS,IDG,name,url,hash,check));
         }

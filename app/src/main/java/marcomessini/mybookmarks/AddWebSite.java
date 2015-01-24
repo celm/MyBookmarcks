@@ -19,6 +19,7 @@ import java.net.URL;
 
 import java.net.URL;
 
+import static marcomessini.mybookmarks.DownloadWS.giveHash;
 import static marcomessini.mybookmarks.DownloadWS.startAsyncTask;
 
 
@@ -29,6 +30,7 @@ public class AddWebSite extends ActionBarActivity {
     Button add;
     public static String newNameWS;
     public static String newURL;
+    public static int hash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +76,12 @@ public class AddWebSite extends ActionBarActivity {
                             //add toast
                             //textView.setText("No network connection available.");
                         }
+                        hash=giveHash();
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("id_g",id_g);
                         returnIntent.putExtra("newURL",newURL);
                         returnIntent.putExtra("newNameWS",newNameWS);
+                        returnIntent.putExtra("hashCode",hash);
                         setResult(RESULT_OK,returnIntent);
                         finish();
                     } catch (MalformedURLException e) {

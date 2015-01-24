@@ -29,7 +29,7 @@ public class SQLiteHelperManager extends SQLiteOpenHelper{
                 "id_group INTEGER REFERENCES groups(id) ON DELETE CASCADE, " +
                 "nameWS TEXT, " +
                 "url TEXT, " +
-                "hash TEXT," +
+                "hash INTEGER," +
                 "check_ws INTEGER )";
 
         // create groups & website tables
