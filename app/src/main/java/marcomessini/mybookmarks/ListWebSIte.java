@@ -52,6 +52,8 @@ public class ListWebSIte extends ActionBarActivity {
 
         final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
 
+        //controllare se tutti i siti sono aggiornati
+
         //controllo se vuoto
         if (valuesWS.isEmpty()){
             Log.e("ArrayList Gruppo","vuoto");
@@ -75,10 +77,6 @@ public class ListWebSIte extends ActionBarActivity {
         };
 
         adapter = new WebSiteAdapter(this, valuesWS);
-
-
-
-
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);

@@ -57,13 +57,11 @@ public class DownloadWS {
 
     static String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
-        // Only display the first 500 characters of the retrieved
-        // web page content.
-        //int len = 50000;
 
         try {
             URL url = new URL(myurl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("User-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4" );
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");

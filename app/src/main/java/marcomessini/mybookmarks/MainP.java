@@ -18,12 +18,23 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static marcomessini.mybookmarks.DownloadWS.giveHash;
+import static marcomessini.mybookmarks.DownloadWS.DownloadWebpageTask;
 
-public class MainP extends ActionBarActivity {
+
+public class MainP extends ActionBarActivity{
 
     ListView listView ;
     DataBaseManager db=new DataBaseManager(this);
     GroupsAdapter adapter;
+    ArrayList<Group> values1 = null;
+    public int posizione;
+    public static int hash;
+    public int i=0;
+    public String url;
+    //DownloadWebpageTask mt = new DownloadWebpageTask(this);
+    public boolean exe=true;
+    public boolean start=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +45,7 @@ public class MainP extends ActionBarActivity {
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
-        //Prova per visualizare nella ListView
-       /* String[] values = new String[]{
-                "Gruppo1",
-                "Gruppo2" *//*,
-                "Gruppo3" ,
-                "Gruppo4"*//*
-        };*/
-
-        final ArrayList<Group> values1 = db.getGroup();
+         values1= db.getGroup();
                 //new Group(1,"social",3)
         if (values1.isEmpty()){
             Log.e("ArrayList Gruppo","vuoto");
@@ -63,9 +66,6 @@ public class MainP extends ActionBarActivity {
         };
 
 
-
-
-
         adapter = new GroupsAdapter(this, values1);
 
         // Assign adapter to ListView
@@ -82,15 +82,21 @@ public class MainP extends ActionBarActivity {
                 newActivity.putExtra("id_gruppo",idG);
                 newActivity.putExtra("nome_gruppo",nomeGroup);
                 startActivity(newActivity);
-                // ListView Clicked item index
-                //int itemPosition = position;
 
-                // ListView Clicked item value
-                //String itemValue = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
-                //Toast.makeText(getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
-
+                //per controllare se il sito è aggiornato
+                /*posizione=position;
+                int gruppo=values1.get(i).id_group;
+                ArrayList<WebSite> webSiteAr=DataBaseManager.getWebSite(gruppo);
+                while(webSiteAr.size()>i){
+                    Log.e("Ciclo",""+i);
+                    url=webSiteAr.get(i).URL;
+                    if(exe){
+                     exe=false;
+                     mt.execute(url);
+                    }
+                    i++;
+                }
+                start=true;*/
             }
 
         });
@@ -140,6 +146,25 @@ public class MainP extends ActionBarActivity {
             }
         }
     }
+
+    /*public void done(){
+        int newHash=giveHash();
+        int oldHash=db.takeHash(i);
+        if (newHash!=oldHash){
+            Log.e("cambio avvenuto"," nuovo"+newHash+"vecchio"+oldHash);
+            db.setCheckWS(i,1);
+            db.updateHash(i,newHash);
+        }
+        exe=true;
+        int idG=values1.get(posizione).id_group;
+        String nomeGroup=values1.get(posizione).name;
+        Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
+        newActivity.putExtra("id_gruppo",idG);
+        newActivity.putExtra("nome_gruppo",nomeGroup);
+        if(!start){
+            startActivity(newActivity);
+        }
+    }*/
 
 
     @Override

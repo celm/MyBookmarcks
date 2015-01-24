@@ -136,7 +136,6 @@ public class DataBaseManager {
 
 
     //funzioni tabella WebSite
-
     public static long addWebSite(int idG, String url, String nameWS, int hash, int check_ws){
         ContentValues initialValuesWS = createContentValuesWS(idG, url, nameWS, hash, check_ws);
         open();
@@ -188,6 +187,28 @@ public class DataBaseManager {
             return true;
         }
         return false;
+    }
+
+    //aggiorna hash
+    public static boolean updateHash(int ws,int newHash){
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_HASH,newHash);
+        String[] id_WS = {Integer.toString(ws)};
+        open();
+        int ris= db.update(TABLE_WEBSITE,cv,KEY_HASH+"=?",id_WS);
+        close();
+        if(ris>0){
+            return true;
+        }
+        return false;
+    }
+    //prendere hash
+    public static int takeHash(int WS){
+        open();
+        Cursor cursor= db.rawQuery("SELECT hash FROM website WHERE id_ws =?",new String[]{Integer.toString(WS)});
+        int ris=cursor.getColumnIndex(KEY_HASH);
+        close();
+        return ris;
     }
 
 }

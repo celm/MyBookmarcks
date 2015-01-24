@@ -50,7 +50,7 @@
 
     <!--verifica se il sito è aggiornato
         rosso=no, verde=si-->
-    <CheckedTextView
+    <!--<CheckedTextView
         android:id="@+id/checkBox1"
         android:background="#ff0b04"
         android:layout_alignParentRight="true"
@@ -60,7 +60,7 @@
         android:layout_marginRight="5dp"
         android:text="UPDATE"
         android:textColor="#dfe8d5"
-        android:textStyle="bold"/>
+        android:textStyle="bold"/>-->
 
 
     <!--<Button
