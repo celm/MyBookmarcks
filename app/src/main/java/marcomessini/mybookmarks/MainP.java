@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,6 +68,7 @@ public class MainP extends ActionBarActivity{
 
 
         adapter = new GroupsAdapter(this, values1);
+        //adapter.notifyDataSetChanged();
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -139,7 +141,6 @@ public class MainP extends ActionBarActivity{
                 long idWS=DataBaseManager.addGroup(name);
                 //inserisci dentro il content value
                 int id_G=(int)idWS;
-
                 adapter.add(new Group(id_G,name,0));
             }
             if (resultCode == RESULT_CANCELED) {

@@ -78,8 +78,8 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
                             mt.execute(newURL);
 
                         } else {
-                            //add toast
-                            //textView.setText("No network connection available.");
+                            //alert if no connection
+                            Toast.makeText(getApplicationContext(),"No network connection available",Toast.LENGTH_LONG).show();
                         }
 
                     } catch (MalformedURLException e) {

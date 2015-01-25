@@ -1,8 +1,11 @@
 package marcomessini.mybookmarks;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,19 +21,25 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class ListWebSIte extends ActionBarActivity {
+public class ListWebSIte extends ActionBarActivity implements TaskCallback{
 
     ListView listView ;
+    SwipeRefreshLayout swipeLayout;
     int idGruppo;
     int idListWS;
+    int i;
+    boolean exe=true;
     String nameGroup;
     DataBaseManager db= new DataBaseManager(this);
     WebSiteAdapter adapter;
+    ArrayList<WebSite> valuesWS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_web_site);
+
+
 
         Intent intent = getIntent();
 
@@ -50,9 +59,28 @@ public class ListWebSIte extends ActionBarActivity {
         valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
         valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));*/
 
-        final ArrayList<WebSite> valuesWS = DataBaseManager.getWebSite(idGruppo);
+        valuesWS = DataBaseManager.getWebSite(idGruppo);
 
         //controllare se tutti i siti sono aggiornati
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e(getClass().getSimpleName(), "refresh");
+
+                    for(i=0;i<valuesWS.size()-1;i++){
+                        Log.e("CICLO",""+i);
+                        String url=valuesWS.get(i).URL;
+                        Log.e("url ciclo",i+" - "+url);
+                        DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(ListWebSIte.this);
+                        mt.execute(url);
+                    }
+            }
+        });
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         //controllo se vuoto
         if (valuesWS.isEmpty()){
@@ -144,6 +172,25 @@ public class ListWebSIte extends ActionBarActivity {
             if (resultCode == RESULT_CANCELED) {
             }
         }
+    }
+
+    public void done(){
+        int hashNew=hashCode();
+        int hashOld=valuesWS.get(i).hash;
+        if(hashNew!=hashOld){
+            Log.e("HASH cambiato"," id_ws "+i);
+            db.setCheckWS(i,1);
+            db.updateHash(i,hashNew);
+        }
+    }
+
+   // @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                swipeLayout.setRefreshing(false);
+            }
+        }, 5000);
     }
 
     @Override
