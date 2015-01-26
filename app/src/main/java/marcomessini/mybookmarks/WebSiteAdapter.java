@@ -32,12 +32,11 @@ public View getView(int position, View convertView, ViewGroup parent) {
         //controllo se il sito è aggiornato
         int check=valuesWS.get(position).check;
         if(check==1){
-            checkedTextView.setBackgroundColor(-16711936);
-            //background verde
+            checkedTextView.setBackgroundColor(-16776961);
+            //background blu
         }
         else{
-            checkedTextView.setBackgroundColor(-65536);
-            //background rosso
+            checkedTextView.setBackgroundColor(-12303292);
         }
         TextView textView = (TextView) rowView.findViewById(R.id.website);
         TextView textView1 = (TextView) rowView.findViewById(R.id.websiteurl);

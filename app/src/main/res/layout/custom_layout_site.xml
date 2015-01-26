@@ -34,7 +34,7 @@
         rosso=no, verde=si-->
     <CheckedTextView
         android:id="@+id/checkWS"
-        android:background="#ff0b04"
+        android:background="#474744"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"

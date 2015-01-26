@@ -19,8 +19,6 @@ import java.net.URL;
 
 import java.net.URL;
 
-import static marcomessini.mybookmarks.DownloadWS.giveHash;
-import static marcomessini.mybookmarks.DownloadWS.DownloadWebpageTask;
 
 
 public class AddWebSite extends ActionBarActivity implements TaskCallback{
@@ -32,7 +30,9 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     public static String newURL;
     public static int hash;
     public static int id_g;
-    DownloadWebpageTask mt = new DownloadWebpageTask(this);
+    TaskCallback tc;
+    WebSite ws;
+    DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(this,null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +95,8 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     }
 
     //implemento done() per passare dati e terminare l'activity
-    public void done() {
-        hash=giveHash();
+    @Override
+    public void done(int hash,int id_ws) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("id_g",id_g);
         returnIntent.putExtra("newURL",newURL);

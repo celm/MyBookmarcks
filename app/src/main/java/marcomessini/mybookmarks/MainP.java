@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static marcomessini.mybookmarks.DownloadWS.giveHash;
+
 import static marcomessini.mybookmarks.DownloadWS.DownloadWebpageTask;
 
 

@@ -23,35 +23,32 @@ import java.net.URL;
  */
 public class DownloadWS {
 
-    public static int hash;
-    public static Context contextAddWS;
-
-
-    public static class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+    public static class DownloadWebpageTask extends AsyncTask<String, Void, Integer> {
         private TaskCallback mCallback;
+        private WebSite website;
 
-        public DownloadWebpageTask(TaskCallback callback) {
-
+        public DownloadWebpageTask(TaskCallback callback, WebSite ws) {
+            website=ws;
             mCallback = callback;
         }
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected Integer doInBackground(String... urls) {
             // params comes from the execute() call: params[0] is the url.
             try {
                 String pars= downloadUrl(urls[0]);
-                hash=pars.hashCode();
-                return pars;
+                int res=pars.hashCode();
+                return res;
 
             } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
+                return -1;
+                //return "Unable to retrieve web page. URL may be invalid.";
             }
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            Log.e("HASH CODE",""+hash);
-            mCallback.done();
+        protected void onPostExecute(Integer res) {
+            mCallback.done(res,website);
         }
     }
 
@@ -78,7 +75,8 @@ public class DownloadWS {
 
             // Makes sure that the InputStream is closed after the app is
             // finished using it.
-        } finally {
+        }
+        finally {
             if (is != null) {
                 is.close();
             }
@@ -103,9 +101,5 @@ public class DownloadWS {
     /*public static void startAsyncTask(String stringUrl){
         new DownloadWebpageTask().execute(stringUrl);
     }*/
-    public static int giveHash(){
-        Log.e("hash inviato",""+hash);
-        return hash;
-    }
 }
 
