@@ -189,14 +189,19 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         int hashNew = hash;
         int hashOld = WS.hash;
         if (hashNew != hashOld) {
-            Log.e("HASH cambiato", " id_ws " + i);
+            Log.e("HASH cambiato", " id_ws " + WS.id_WebSite);
             db.setCheckWS(WS.id_WebSite, 1);
-            db.updateHash(WS.id_WebSite, hashNew);
+            db.updateHash(WS.id_WebSite, hashNew);//non funziona correttamente
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
+            WS.check=1;
+            adapter.notifyDataSetChanged();
         }
         else {
             db.setCheckWS(WS.id_WebSite,0);
+            WS.check=0;
+            adapter.notifyDataSetChanged();
+            Log.e("HASH invariato"," id_ws " +WS.id_WebSite);
         }
         if(count==valuesWS.size() - 1){
             swipeLayout.setRefreshing(false);

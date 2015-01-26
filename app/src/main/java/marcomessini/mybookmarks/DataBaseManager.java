@@ -190,6 +190,7 @@ public class DataBaseManager {
     }
 
     //aggiorna hash
+    //da rifare
     public static boolean updateHash(int ws,int newHash){
         ContentValues cv = new ContentValues();
         cv.put(KEY_HASH,newHash);
