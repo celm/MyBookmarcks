@@ -32,7 +32,7 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     public static int id_g;
     TaskCallback tc;
     WebSite ws;
-    DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(this,null);
+    DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(this,ws);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
 
     //implemento done() per passare dati e terminare l'activity
     @Override
-    public void done(int hash,int id_ws) {
+    public void done(int hash,WebSite ws) {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("id_g",id_g);
         returnIntent.putExtra("newURL",newURL);

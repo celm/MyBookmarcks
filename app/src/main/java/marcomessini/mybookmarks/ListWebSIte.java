@@ -35,7 +35,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     ArrayList<WebSite> valuesWS;
     private Handler handler = new Handler();
     int count=0;
-    TaskCallback tc;
+    TaskCallback tc=this;
     WebSite WS;
 
     @Override
@@ -75,8 +75,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
             @Override
             public void onRefresh() {
                 Log.e(getClass().getSimpleName(), "refresh");
-
-                for (i = 0; i < valuesWS.size() - 1; i++) {
+                count=0;
+                for (i = 0; i <= valuesWS.size() - 1; i++) {
                     Log.e("CICLO", "" + i);
                     String url = valuesWS.get(i).URL;
                     Log.e("url ciclo", i + " - " + url);
@@ -173,7 +173,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 String nameWS = data.getStringExtra("newNameWS");
                 int hashIns = data.getIntExtra("hashCode", -1);
                 //eseguo la query di inserimento
-                long idWS = DataBaseManager.addWebSite(gruppo, url, nameWS, 0, 0);
+                long idWS = DataBaseManager.addWebSite(gruppo, url, nameWS, hashIns, 0);
                 //inserisci dentro il content value
                 int id_WS = (int) idWS;
                 Log.e("hash inserito", "" + hashIns);
@@ -185,15 +185,15 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     }
 
     @Override
-    public void done(int hash,WS) {
-        //contatore per la fine dei thread
-        count++;
+    public void done(int hash,WebSite WS) {
         int hashNew = hash;
-        int hashOld = db.takeHash(WS.id_WebSite);
+        int hashOld = WS.hash;
         if (hashNew != hashOld) {
             Log.e("HASH cambiato", " id_ws " + i);
             db.setCheckWS(WS.id_WebSite, 1);
             db.updateHash(WS.id_WebSite, hashNew);
+            Log.e("NEW HASH",""+hashNew);
+            Log.e("OLD HASH",""+hashOld);
         }
         else {
             db.setCheckWS(WS.id_WebSite,0);
@@ -201,6 +201,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         if(count==valuesWS.size() - 1){
             swipeLayout.setRefreshing(false);
         }
+        //count
+        count++;
     }
 
     /*//@Override
