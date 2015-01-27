@@ -1,11 +1,14 @@
 package marcomessini.mybookmarks;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +42,19 @@ public class MainP extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_p);
 
-        setTitle("MyBookmarks -GROUP LIST-");
+
+        //alarm & Service
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent alarmIntent = new Intent(this,UpToDateServiceIntent.class);
+        //PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
+
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() +
+                        10 * 1000, pending);
+
+        setTitle("MyBookmarks - GROUP LIST -");
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
