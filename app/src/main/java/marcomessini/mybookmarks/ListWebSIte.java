@@ -43,7 +43,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_web_site);
 
-
         Intent intent = getIntent();
 
         idGruppo = intent.getIntExtra("id_gruppo", -1);
@@ -114,13 +113,9 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                         }
                     })*/
                     .show();
-        }
-        ;
+        };
 
-
-
-
-        // ListView Item Click Listener
+         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -172,9 +167,9 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 String url = data.getStringExtra("newURL");
                 String nameWS = data.getStringExtra("newNameWS");
                 int hashIns = data.getIntExtra("hashCode", -1);
-                //eseguo la query di inserimento
+                //eseguo la query di inserimento nel DB
                 long idWS = DataBaseManager.addWebSite(gruppo, url, nameWS, hashIns, 0);
-                //inserisci dentro il content value
+                //inserisci dentro il content value per la view
                 int id_WS = (int) idWS;
                 Log.e("hash inserito", "" + hashIns);
                 adapter.add(new WebSite(id_WS, gruppo, nameWS, url, hashIns, 0));
@@ -188,13 +183,20 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     public void done(int hash,WebSite WS) {
         int hashNew = hash;
         int hashOld = WS.hash;
+        if (hashNew == -1){
+            hashNew = hashOld;
+            Toast.makeText(this,"CONNESSION LOST WHIT "+WS.name,Toast.LENGTH_LONG).show();
+        }
+        //controllo hash
         if (hashNew != hashOld) {
             Log.e("HASH cambiato", " id_ws " + WS.id_WebSite);
             db.setCheckWS(WS.id_WebSite, 1);
-            db.updateHash(WS.id_WebSite, hashNew);//non funziona correttamente
+            db.updateHASH(WS.id_WebSite, hashNew);//non funziona correttamente(corretta)?!-->da provare
+            //Log.e("hash new inserito"," "+ins);
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
             WS.check=1;
+            WS.hash=hashNew;
             adapter.notifyDataSetChanged();
         }
         else {
@@ -206,36 +208,9 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         if(count==valuesWS.size() - 1){
             swipeLayout.setRefreshing(false);
         }
-        //count
+        //count per sapere quando terminare lo scrollView
         count++;
     }
-
-    /*//@Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                swipeLayout.setRefreshing(false);
-            }
-        }, 5000);
-    }*/
-
-   /* private final Runnable refreshing = new Runnable() {
-        public void run() {
-            try {
-                // TODO : isRefreshing should be attached to your data request status
-                if (exe) {
-                    // re run the verification after 1 second
-                    handler.postDelayed(this, 1000);
-                } else {
-                    // stop the animation after the data is fully loaded
-                    swipeLayout.setRefreshing(false);
-                    // TODO : update your list with the new data
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };*/
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {

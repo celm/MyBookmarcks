@@ -58,7 +58,7 @@ public class DataBaseManager {
     }
 
     //per tab gruppi
-    private static ContentValues createContentValuesG(String name ) {
+    private static ContentValues createContentValuesG(String name) {
         ContentValues valuesG = new ContentValues();
         valuesG.put( KEY_NAME, name );
 
@@ -190,20 +190,20 @@ public class DataBaseManager {
     }
 
     //aggiorna hash
-    //da rifare
-    public static boolean updateHash(int ws,int newHash){
+    //da rifare??
+    public static int updateHASH(int id_ws,int newHash){
         ContentValues cv = new ContentValues();
-        cv.put(KEY_HASH,newHash);
-        String[] id_WS = {Integer.toString(ws)};
+        int NEWHASH=newHash;
+        cv.put(KEY_HASH,NEWHASH);
+        String id_WS=Integer.toString(id_ws);
+        String[] id_WebPage = {id_WS};
         open();
-        int ris= db.update(TABLE_WEBSITE,cv,KEY_HASH+"=?",id_WS);
+        int ris=db.update(TABLE_WEBSITE,cv,KEY_IDWS+"=?",id_WebPage);
         close();
-        if(ris>0){
-            return true;
-        }
-        return false;
+        return ris;
     }
     //prendere hash
+    //inutile, almeno per ora
     public static int takeHash(int WS){
         open();
         Cursor cursor= db.rawQuery("SELECT hash FROM website WHERE id_ws =?",new String[]{Integer.toString(WS)});

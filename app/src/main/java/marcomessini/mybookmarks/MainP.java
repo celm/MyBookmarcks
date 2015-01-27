@@ -30,12 +30,9 @@ public class MainP extends ActionBarActivity{
     GroupsAdapter adapter;
     ArrayList<Group> values1 = null;
     public int posizione;
-    public static int hash;
     public int i=0;
     public String url;
-    //DownloadWebpageTask mt = new DownloadWebpageTask(this);
-    public boolean exe=true;
-    public boolean start=false;
+    //TaskCallback tc=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,22 +80,21 @@ public class MainP extends ActionBarActivity{
                 Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
                 newActivity.putExtra("id_gruppo",idG);
                 newActivity.putExtra("nome_gruppo",nomeGroup);
-                startActivity(newActivity);
+
 
                 //per controllare se il sito è aggiornato
                 /*posizione=position;
                 int gruppo=values1.get(i).id_group;
                 ArrayList<WebSite> webSiteAr=DataBaseManager.getWebSite(gruppo);
-                while(webSiteAr.size()>i){
-                    Log.e("Ciclo",""+i);
-                    url=webSiteAr.get(i).URL;
-                    if(exe){
-                     exe=false;
-                     mt.execute(url);
+                if(webSiteAr.size()>0) {
+                    for (int i = 0; i <= webSiteAr.size(); i++) {
+                        WebSite ws = webSiteAr.get(i);
+                        DownloadWebpageTask mt = new DownloadWebpageTask(tc, ws);
+                        mt.execute(ws.URL);
                     }
-                    i++;
-                }
-                start=true;*/
+                }*/
+                //parte l'actuvity --> da controllare
+                startActivity(newActivity);
             }
 
         });
@@ -148,22 +144,22 @@ public class MainP extends ActionBarActivity{
         }
     }
 
-    /*public void done(){
-        int newHash=giveHash();
-        int oldHash=db.takeHash(i);
-        if (newHash!=oldHash){
-            Log.e("cambio avvenuto"," nuovo"+newHash+"vecchio"+oldHash);
-            db.setCheckWS(i,1);
-            db.updateHash(i,newHash);
+    /*@Override
+    public void done(int hash, WebSite webSite){
+        int newHash=hash;
+        int oldHash=webSite.hash;
+        if(newHash!=oldHash){
+            Log.e("HASH MODIFICATO "+webSite.id_WebSite," new H "+newHash+" old H"+oldHash);
+            db.setCheckWS(webSite.id_WebSite,1);
+            db.updateHash(webSite.id_WebSite,newHash);
+            webSite.check=1;
+            adapter.notifyDataSetChanged();
         }
-        exe=true;
-        int idG=values1.get(posizione).id_group;
-        String nomeGroup=values1.get(posizione).name;
-        Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
-        newActivity.putExtra("id_gruppo",idG);
-        newActivity.putExtra("nome_gruppo",nomeGroup);
-        if(!start){
-            startActivity(newActivity);
+        else{
+            Log.e("HASH INVARIATO "+webSite.id_WebSite," old H"+oldHash);
+            db.setCheckWS(webSite.id_WebSite,0);
+            webSite.check=0;
+            adapter.notifyDataSetChanged();
         }
     }*/
 

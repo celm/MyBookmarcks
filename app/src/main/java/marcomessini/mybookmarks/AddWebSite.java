@@ -30,9 +30,10 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     public static String newURL;
     public static int hash;
     public static int id_g;
-    TaskCallback tc;
+    TaskCallback tc=this;
     WebSite ws;
-    DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(this,ws);
+    boolean ok=true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,43 +54,48 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
 
             @Override
             public void onClick(View arg0) {
-                //per prendere il nome
-                newNameWS = nameWS.getText().toString();
-                newURL=URL.getText().toString();
 
-                //per tornare all'activity precedente
+               // if(ok){
+                    //per prendere il nome
+                    newNameWS = nameWS.getText().toString();
+                    newURL=URL.getText().toString();
+
+                    //per tornare all'activity precedente
                 /*Intent ActivityRet= new Intent(AddWebSite.this, ListWebSIte.class);
                 ActivityRet.putExtra("id_gruppo",id_g);
                 startActivity(ActivityRet);*/
-                boolean name=newNameWS.isEmpty();
-                boolean url=newURL.isEmpty();
-                if (!name && !url){
-                    if (!newURL.contains("http://"))
-                        newURL = "http://" + newURL;
+                    boolean name=newNameWS.isEmpty();
+                    boolean url=newURL.isEmpty();
+                    if (!name && !url){
+                        if (!newURL.contains("http://"))
+                            newURL = "http://" + newURL;
 
-                    URL urlW;
-                    try {
-                        urlW = new URL(newURL);
-                        ConnectivityManager connMgr = (ConnectivityManager)
-                                getSystemService(Context.CONNECTIVITY_SERVICE);
-                        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                        if (networkInfo != null && networkInfo.isConnected()) {
-                            //startAsyncTask(newURL);
-                            mt.execute(newURL);
+                        URL urlW;
+                        try {
+                            urlW = new URL(newURL);
+                            ConnectivityManager connMgr = (ConnectivityManager)
+                                    getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                            if (networkInfo != null && networkInfo.isConnected()) {
+                                //startAsyncTask(newURL);
+                                DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(tc,ws);
+                                mt.execute(newURL);
 
-                        } else {
-                            //alert if no connection
-                            Toast.makeText(getApplicationContext(),"No network connection available",Toast.LENGTH_LONG).show();
+                            } else {
+                                //alert if no connection
+                                Toast.makeText(getApplicationContext(),"No network connection available",Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (MalformedURLException e) {
+                            Toast.makeText(getApplicationContext(),"The value is not an URL",Toast.LENGTH_LONG).show();
                         }
 
-                    } catch (MalformedURLException e) {
-                        Toast.makeText(getApplicationContext(),"The value is not an URL",Toast.LENGTH_LONG).show();
                     }
-
-                }
-                else{
-                    //stringhe nn inserite(non fare niente)
-                }
+                    else{
+                        //stringhe nn inserite(non fare niente)
+                    }
+                //}
+                //ok=false;
             }
         });
     }
@@ -97,6 +103,9 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     //implemento done() per passare dati e terminare l'activity
     @Override
     public void done(int hash,WebSite ws) {
+        if(hash == -1){
+            Toast.makeText(this,"-CONNETION LOST- IMPOSSIBLE TO ADD WEB SITE",Toast.LENGTH_LONG).show();
+        }
         Intent returnIntent = new Intent();
         returnIntent.putExtra("id_g",id_g);
         returnIntent.putExtra("newURL",newURL);
