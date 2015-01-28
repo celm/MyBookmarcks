@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Name of WebSite"
+        android:text="Name of BookMark"
         android:id="@+id/textView"
         android:layout_centerHorizontal="true" />
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="URL of WebSite"
+        android:text="URL of BookMark"
         android:id="@+id/textView2"
         android:layout_below="@+id/editTextAddWSName"
         android:layout_alignRight="@+id/textView"

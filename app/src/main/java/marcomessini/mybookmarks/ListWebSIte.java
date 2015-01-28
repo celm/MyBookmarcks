@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -98,7 +99,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         if (valuesWS.isEmpty()) {
             Log.e("ArrayList Gruppo", "vuoto");
             new AlertDialog.Builder(ListWebSIte.this)
-                    .setTitle("There aren't WebSite")
+                    .setTitle("There aren't any WebSite")
                     .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
@@ -136,8 +137,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 new AlertDialog.Builder(ListWebSIte.this)
-                        .setTitle("Delete Web Site")
-                        .setMessage("Are you sure you want to delete this web site?")
+                        .setTitle("Delete BookMark")
+                        .setMessage("Are you sure you want to delete this BookMark?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //funzione per eliminare il sito
@@ -234,6 +235,26 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 ActivityAddWS.putExtra("id_gruppo", idGruppo);
                 //activity for result
                 startActivityForResult(ActivityAddWS, 1);
+            }
+            if (id == R.id.action_modGroup) {
+                final EditText input = new EditText(this);
+                new AlertDialog.Builder(this)
+                        .setTitle("Modify Group's Name")
+                        .setView(input)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //per modificare il nome
+                                String value = input.getText().toString();
+                                int IDG=idGruppo;
+                                db.modGroupName(IDG,value);
+                                //da finire
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        }).show();
             }
 
             return super.onOptionsItemSelected(item);

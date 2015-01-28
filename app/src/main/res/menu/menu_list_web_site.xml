@@ -5,4 +5,7 @@
 
     <item android:id="@+id/action_addWS" android:title="@string/action_addWS"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_modGroup" android:title="@string/action_modGroup"
+        android:actionViewClass="android.widget.SeekBar" app:showAsAction="never" />
 </menu>

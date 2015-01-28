@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +33,8 @@ public class MainP extends ActionBarActivity{
     DataBaseManager db=new DataBaseManager(this);
     GroupsAdapter adapter;
     ArrayList<Group> values1 = null;
-    public int posizione;
-    public int i=0;
     public String url;
+    long timer;
     //TaskCallback tc=this;
 
     @Override
@@ -46,17 +46,17 @@ public class MainP extends ActionBarActivity{
         //alarm & Service
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
-        PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        //-Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
+        //-PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         //PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
-
-
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,10 * 1000,10 * 1000, pending);
+        //set timer
+        timer=60*15*1000;
+        //-alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timer,timer, pending);
 
         //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
         //        SystemClock.elapsedRealtime() +
         //                10 * 1000, pending);
-        //-------------//
+                                //-------------//
         setTitle("MyBookmarks - GROUP LIST -");
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
@@ -66,7 +66,7 @@ public class MainP extends ActionBarActivity{
         if (values1.isEmpty()){
             Log.e("ArrayList Gruppo","vuoto");
             new AlertDialog.Builder(MainP.this)
-                    .setTitle("There aren't Grups")
+                    .setTitle("There aren't any Groups")
                     .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
@@ -188,18 +188,52 @@ public class MainP extends ActionBarActivity{
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ( keyCode == KeyEvent.KEYCODE_MENU ) {
+            //Put the code for an action menu from the top here
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_addGroup) {
             Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
             startActivityForResult(ActivityAddGroup, 1);
+        }
+        if (id == R.id.action_setTimer) {
+            final CharSequence[] items = {"15Min", "30Min", "Hour","2Hour"};
+            new AlertDialog.Builder(this)
+            .setTitle("Set Timer for UpDate")
+            .setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    if(items[item].equals("15Min")){
+                        timer=60*15*1000;
+                        Log.e("Timer settato a 15Min"," "+timer);
+                    }
+                    else if(items[item].equals("30Min")){
+                        timer=60*30*1000;
+                        Log.e("Timer settato a 30Min"," "+timer);
+                    }
+                    else if(items[item].equals("Hour")){
+                        timer=60*60*1000;
+                        Log.e("Timer settato a 1H"," "+timer);
+                    }
+                    else{
+                        timer=60*120*1000;
+                        Log.e("Timer settato a 2H"," "+timer);
+                    }
+                }
+            }).show();
         }
 
         return super.onOptionsItemSelected(item);

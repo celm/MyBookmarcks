@@ -202,6 +202,20 @@ public class DataBaseManager {
         close();
         return ris;
     }
+    //modifica nome gruppo
+    public boolean modGroupName(int id_g, String newName){
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME,newName);
+        String [] id_group={Integer.toString(id_g)};
+        open();
+        int ris=db.update(TABLE_GROUPS,cv,KEY_ID+"=?",id_group);
+        close();
+        if(ris>0){
+            return true;
+        }
+        return false;
+    }
+
     //prendere hash
     //inutile, almeno per ora
     public static int takeHash(int WS){

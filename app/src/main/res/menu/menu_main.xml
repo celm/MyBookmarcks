@@ -4,4 +4,8 @@
 
     <item android:id="@+id/action_addGroup" android:title="@string/action_addGroup"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_setTimer" android:title="@string/action_setTimer"
+        android:actionViewClass="android.widget.SeekBar" app:showAsAction="never" />
+
 </menu>
