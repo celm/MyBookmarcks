@@ -36,7 +36,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     private Handler handler = new Handler();
     int count=0;
     TaskCallback tc=this;
-    WebSite WS;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +79,9 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                     Log.e("CICLO", "" + i);
                     String url = valuesWS.get(i).URL;
                     Log.e("url ciclo", i + " - " + url);
-                    WS=valuesWS.get(i);
-                    DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(tc,WS);
+                    WebSite webSite;
+                    webSite=valuesWS.get(i);
+                    DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(tc,webSite);
                     mt.execute(url);
                     if (i == valuesWS.size() - 1) {
                         exe = true;

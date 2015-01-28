@@ -15,15 +15,7 @@ import java.util.ArrayList;
  */
 public class UpToDateServiceIntent extends IntentService implements TaskCallback{
 
-    public static final int STATUS_RUNNING = 0;
-    public static final int STATUS_FINISHED = 1;
-    public static final int STATUS_ERROR = 2;
-    TaskCallback tc=this;
-    WebSite WS;
     DataBaseManager db=new DataBaseManager(this);
-    ArrayList<WebSite> valueWS;
-    ArrayList<Group> valueG;
-
     private static final String TAG = "DownloadService";
 
     public UpToDateServiceIntent() {
@@ -35,22 +27,13 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
 
         Log.d(TAG, "Service Started!");
 
-        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        String url = intent.getStringExtra("url");
-
-        Bundle bundle = new Bundle();
-
-        if (!TextUtils.isEmpty(url)) {
-            /* Update UI: Download Service is Running */
-            receiver.send(STATUS_RUNNING, Bundle.EMPTY);
-
             try {
-                valueG=DataBaseManager.getGroup();
+                ArrayList<Group> valueG=DataBaseManager.getGroup();
                 for(int i=0;i<=valueG.size()-1;i++){
-                    valueWS=DataBaseManager.getWebSite(i);
+                    ArrayList<WebSite> valueWS=DataBaseManager.getWebSite(valueG.get(i).id_group);
                     for(int j=0;j<=valueWS.size()-1;j++){
-                        WS=valueWS.get(j);
-                        DownloadWS.DownloadWebpageTask mt= new DownloadWS.DownloadWebpageTask(tc,WS);
+                        WebSite WS=valueWS.get(j);
+                        DownloadWS.DownloadWebpageTask mt= new DownloadWS.DownloadWebpageTask(this,WS);
                         mt.execute(WS.URL);
                     }
                 }
@@ -61,16 +44,16 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
                     receiver.send(STATUS_FINISHED, bundle);
                 }*/
             } catch (Exception e) {
-
+                e.printStackTrace();
                 /* Sending error message back to activity */
-                bundle.putString(Intent.EXTRA_TEXT, e.toString());
-                receiver.send(STATUS_ERROR, bundle);
+                //bundle.putString(Intent.EXTRA_TEXT, e.toString());
+                //receiver.send(STATUS_ERROR, bundle);
             }
         }
-    }
+
 
     @Override
-    public void done(int hash, WebSite ws) {
+    public void done(int hash, WebSite WS) {
         int hashNew = hash;
         int hashOld = WS.hash;
         if (hashNew == -1){
@@ -79,21 +62,18 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         }
         //controllo hash
         if (hashNew != hashOld) {
-            Log.e("HASH cambiato", " id_ws " + WS.id_WebSite);
+            Log.e("[SERVICE]HASH cambiato", " wsName " + WS.name);
             db.setCheckWS(WS.id_WebSite, 1);
-            db.updateHASH(WS.id_WebSite, hashNew);//non funziona correttamente(corretta)?!-->da provare
-            //Log.e("hash new inserito"," "+ins);
+            db.updateHASH(WS.id_WebSite, hashNew);
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
-            WS.check=1;
+            //WS.check=1;
             WS.hash=hashNew;
-            //adapter.notifyDataSetChanged();
         }
         else {
             db.setCheckWS(WS.id_WebSite,0);
-            WS.check=0;
-            //adapter.notifyDataSetChanged();
-            Log.e("HASH invariato"," id_ws " +WS.id_WebSite);
+            //WS.check=0;
+            Log.e("[SERVICE]HASH invariato"," wsName " +WS.name);
         }
     }
 }

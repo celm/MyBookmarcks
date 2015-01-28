@@ -46,14 +46,17 @@ public class MainP extends ActionBarActivity{
         //alarm & Service
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent alarmIntent = new Intent(this,UpToDateServiceIntent.class);
-        //PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-        PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
+        Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
+        PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        //PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
 
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() +
-                        10 * 1000, pending);
 
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,10 * 1000,10 * 1000, pending);
+
+        //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+        //        SystemClock.elapsedRealtime() +
+        //                10 * 1000, pending);
+        //-------------//
         setTitle("MyBookmarks - GROUP LIST -");
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
