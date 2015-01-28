@@ -42,16 +42,15 @@ public class MainP extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_p);
 
-
         //alarm & Service
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        //-Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
-        //-PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
+        PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         //PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
         //set timer
         timer=60*15*1000;
-        //-alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timer,timer, pending);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timer,timer, pending);
 
         //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
         //        SystemClock.elapsedRealtime() +
@@ -196,6 +195,7 @@ public class MainP extends ActionBarActivity{
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {

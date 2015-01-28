@@ -247,7 +247,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                                 String value = input.getText().toString();
                                 int IDG=idGruppo;
                                 db.modGroupName(IDG,value);
-                                //da finire
+                                setTitle("Group " + value);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

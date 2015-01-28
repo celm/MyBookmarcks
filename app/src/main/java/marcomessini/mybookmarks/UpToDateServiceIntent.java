@@ -1,9 +1,11 @@
 package marcomessini.mybookmarks;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -68,6 +70,7 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
             //WS.check=1;
+            callNotify(WS.name);
             WS.hash=hashNew;
         }
         else {
@@ -75,5 +78,16 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
             //WS.check=0;
             Log.e("[SERVICE]HASH invariato"," wsName " +WS.name);
         }
+    }
+
+    public void callNotify(String WSname){
+        Log.e("NOTIFICA PARTITA"," WS="+WSname);
+        NotificationCompat.Builder n  = new NotificationCompat.Builder(this)
+                .setContentTitle(WSname)
+                .setContentText("IS CHANGE")
+                .setSmallIcon(android.R.drawable.ic_dialog_email);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, n.build());
     }
 }
