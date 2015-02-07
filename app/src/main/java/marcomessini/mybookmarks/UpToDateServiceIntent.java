@@ -1,9 +1,13 @@
 package marcomessini.mybookmarks;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.v4.app.NotificationCompat;
@@ -71,8 +75,9 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
             //WS.check=1;
-            callNotify(WS.name,WS.URL);
             WS.hash=hashNew;
+            callNotify(WS);
+
         }
         else {
             db.setCheckWS(WS.id_WebSite,0);
@@ -81,22 +86,80 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         }
     }
 
-    public void callNotify(String WSname, String url){
-        Log.e("NOTIFICA PARTITA"," WS="+WSname);
+    public void callNotify(WebSite WS){
+        Log.e("NOTIFICA PARTITA"," WS="+WS.name);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(android.R.drawable.ic_dialog_email, "-"+WS.name+"-"+"IS CHANGED", System.currentTimeMillis());
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        Intent intent = new Intent(this, WebViewA.class);
+        intent.setAction("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("URL", WS.URL);
+        intent.putExtra("nomeSito", WS.name);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,WS.id_WebSite,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setLatestEventInfo(this, "-"+WS.name+"-"+"IS CHANGED", WS.name, pendingIntent);
+        notificationManager.notify(WS.id_WebSite, notification);
+
+        /*//Android dev
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+
+                        .setContentTitle(" - "+WS.name+" - "+" IS CHANGED")
+                        .setContentText("MyBookmarks")
+                        .setSmallIcon(android.R.drawable.ic_dialog_email)
+                        .setAutoCancel(true);
+
+        // Creates an explicit intent for an Activity in your app
         Intent intent=new Intent(this,WebViewA.class);
-        intent.putExtra("URL", url);
-        intent.putExtra("nomeSito",WSname);
-        //zero al posto di PendingIntent.FLAG_CANCEL_CURRENT
-        PendingIntent pi= PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        intent.setAction("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("IDWS",WS.id_WebSite);
+        intent.putExtra("URL", WS.URL);
+        intent.putExtra("nomeSito",WS.name);
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(WebViewA.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        *//*PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_CANCEL_CURRENT);*//*
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(WS.id_WebSite, mBuilder.build());*/
+
+
+        //zero al posto di PendingIntent.FLAG_CANCEL_CURRENT opp WS.id_WebSite
+        /*PendingIntent pi= PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder n  = new NotificationCompat.Builder(this)
-                .setContentTitle(" - "+WSname+" - ")
-                .setContentText("IS CHANGED")
+                .setContentTitle(" - "+WS.name+" - "+" IS CHANGED")
+                .setContentText("MyBookmarks")
                 .setSmallIcon(android.R.drawable.ic_dialog_email)
                 .setContentIntent(pi)
                 .setAutoCancel(true);
 
+
+                Intent intent=new Intent(this,WebViewA.class);
+                intent.putExtra("IDWS",WS.id_WebSite);
+                intent.putExtra("URL", WS.URL);
+                intent.putExtra("nomeSito",WS.name);
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, n.build());
+        notificationManager.notify(WS.id_WebSite, n.build());*/
 
     }
 }

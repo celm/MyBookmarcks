@@ -67,19 +67,22 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
                     boolean name=newNameWS.isEmpty();
                     boolean url=newURL.isEmpty();
                     if (!name && !url){
-                        if (!newURL.contains("http://"))
+                        if(newURL.contains("https://")){
+                            //nn fare niente
+                        }
+                        else if (!newURL.contains("http://") && !newURL.contains("https://"))
                             newURL = "http://" + newURL;
-
-                        URL urlW;
+                        //URL urlW;
                         try {
-                            urlW = new URL(newURL);
+                            URL urlW = new URL(newURL);
+                            String newURLWS=urlW.toString();
                             ConnectivityManager connMgr = (ConnectivityManager)
                                     getSystemService(Context.CONNECTIVITY_SERVICE);
                             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                             if (networkInfo != null && networkInfo.isConnected()) {
                                 //startAsyncTask(newURL);
                                 DownloadWS.DownloadWebpageTask mt=new DownloadWS.DownloadWebpageTask(tc,ws);
-                                mt.execute(newURL);
+                                mt.execute(newURLWS);
 
                             } else {
                                 //alert if no connection
@@ -104,15 +107,17 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     @Override
     public void done(int hash,WebSite ws) {
         if(hash == -1){
-            Toast.makeText(this,"-CONNETION LOST- IMPOSSIBLE TO ADD WEB SITE",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"-CONNETION LOST- IMPOSSIBLE TO ADD WEB SITE, TRY AGAIN",Toast.LENGTH_LONG).show();
         }
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("id_g",id_g);
-        returnIntent.putExtra("newURL",newURL);
-        returnIntent.putExtra("newNameWS",newNameWS);
-        returnIntent.putExtra("hashCode",hash);
-        setResult(RESULT_OK, returnIntent);
-        finish();
+        else {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("id_g", id_g);
+            returnIntent.putExtra("newURL", newURL);
+            returnIntent.putExtra("newNameWS", newNameWS);
+            returnIntent.putExtra("hashCode", hash);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        }
     }
 
 

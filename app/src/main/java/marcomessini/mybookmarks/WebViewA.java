@@ -7,12 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 
 public class WebViewA extends ActionBarActivity {
 
     String url;
     String nome;
+    int idWS;
     private WebView myWebView;
 
     @Override
@@ -25,6 +27,7 @@ public class WebViewA extends ActionBarActivity {
         myWebView.getSettings().setLoadsImagesAutomatically(true);
 
         Intent intent = getIntent();
+        idWS= intent.getIntExtra("IDWS",0);
         url= intent.getStringExtra("URL");
         nome= intent.getStringExtra("nomeSito");
         setTitle("WebSite "+nome);
@@ -32,6 +35,21 @@ public class WebViewA extends ActionBarActivity {
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
 
+    }
+
+    @Override
+    public void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            idWS= intent.getIntExtra("IDWS",0);
+            url= intent.getStringExtra("URL");
+            nome= intent.getStringExtra("nomeSito");
+            setTitle("WebSite "+nome);
+
+            myWebView.setWebViewClient(new WebViewClient());
+            myWebView.loadUrl(url);
+        }
     }
 
 

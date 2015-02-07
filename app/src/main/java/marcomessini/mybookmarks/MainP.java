@@ -227,7 +227,7 @@ public class MainP extends ActionBarActivity{
             startActivityForResult(ActivityAddGroup, 1);
         }
         if (id == R.id.action_setTimer) {
-            final CharSequence[] items = {"15Min", "30Min", "Hour","2Hour"};
+            final CharSequence[] items = {"2Min","15Min", "30Min", "Hour","2Hour"};
             SharedPreferences pref = getPreferences(MODE_PRIVATE);
             final SharedPreferences.Editor edit= pref.edit();
             //timer= pref.getLong("TIMER",60*15*1000);
@@ -242,22 +242,26 @@ public class MainP extends ActionBarActivity{
                     //
                     switch (item) {
                         case (0):
-                            edit.putLong("TIMER",60*15*1000);
+                            edit.putLong("TIMER",60*2*1000);
                             edit.commit();
-
                             Log.e("SetTemp",""+items[0]);
                             break;
                         case (1):
+                            edit.putLong("TIMER",60*15*1000);
+                            edit.commit();
+                            Log.e("SetTemp",""+items[0]);
+                            break;
+                        case (2):
                             edit.putLong("TIMER",60*30*1000);
                             edit.commit();
                             Log.e("SetTemp",""+items[1]);
                             break;
-                        case(2):
+                        case(3):
                             edit.putLong("TIMER",60*60*1000);
                             edit.commit();
                             Log.e("SetTemp",""+items[2]);
                             break;
-                        case(3):
+                        case(4):
                             edit.putLong("TIMER",60*120*1000);
                             edit.commit();
                             Log.e("SetTemp",""+items[3]);
