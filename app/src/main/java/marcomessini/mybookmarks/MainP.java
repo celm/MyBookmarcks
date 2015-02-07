@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +38,8 @@ public class MainP extends ActionBarActivity{
     long timer;
     //TaskCallback tc=this;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +51,14 @@ public class MainP extends ActionBarActivity{
         Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
         PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         //PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
+
+
+
+
         //set timer
-        timer=60*15*1000;
+        SharedPreferences pref = getPreferences(MODE_PRIVATE);
+        long timer=pref.getLong("TIMER",60*15*1000);
+        Log.e("Time set"," "+timer);
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timer,timer, pending);
 
         //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -144,6 +153,7 @@ public class MainP extends ActionBarActivity{
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
@@ -159,6 +169,12 @@ public class MainP extends ActionBarActivity{
             if (resultCode == RESULT_CANCELED) {
             }
         }
+    }
+
+    void setTimer(long time, SharedPreferences pref){
+        SharedPreferences.Editor edit=pref.edit();
+        edit.putLong("TIMER",60*15*1000);
+        edit.commit();
     }
 
     /*@Override
@@ -212,25 +228,40 @@ public class MainP extends ActionBarActivity{
         }
         if (id == R.id.action_setTimer) {
             final CharSequence[] items = {"15Min", "30Min", "Hour","2Hour"};
+            SharedPreferences pref = getPreferences(MODE_PRIVATE);
+            final SharedPreferences.Editor edit= pref.edit();
+            //timer= pref.getLong("TIMER",60*15*1000);
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
+                    //timer=60*15*1000;
+                    //timer=60*30*1000;
+                    //timer=60*60*1000;
+                    //timer=60*120*1000;
             .setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
-                    if(items[item].equals("15Min")){
-                        timer=60*15*1000;
-                        Log.e("Timer settato a 15Min"," "+timer);
-                    }
-                    else if(items[item].equals("30Min")){
-                        timer=60*30*1000;
-                        Log.e("Timer settato a 30Min"," "+timer);
-                    }
-                    else if(items[item].equals("Hour")){
-                        timer=60*60*1000;
-                        Log.e("Timer settato a 1H"," "+timer);
-                    }
-                    else{
-                        timer=60*120*1000;
-                        Log.e("Timer settato a 2H"," "+timer);
+                    //
+                    switch (item) {
+                        case (0):
+                            edit.putLong("TIMER",60*15*1000);
+                            edit.commit();
+
+                            Log.e("SetTemp",""+items[0]);
+                            break;
+                        case (1):
+                            edit.putLong("TIMER",60*30*1000);
+                            edit.commit();
+                            Log.e("SetTemp",""+items[1]);
+                            break;
+                        case(2):
+                            edit.putLong("TIMER",60*60*1000);
+                            edit.commit();
+                            Log.e("SetTemp",""+items[2]);
+                            break;
+                        case(3):
+                            edit.putLong("TIMER",60*120*1000);
+                            edit.commit();
+                            Log.e("SetTemp",""+items[3]);
+                            break;
                     }
                 }
             }).show();

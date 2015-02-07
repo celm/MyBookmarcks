@@ -127,6 +127,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 Intent newActivity = new Intent(ListWebSIte.this, WebViewA.class);
                 newActivity.putExtra("URL", url);
                 newActivity.putExtra("nomeSito", nome);
+                db.setCheckWS(valuesWS.get(position).id_WebSite,0);
+                valuesWS.get(position).check=0;
                 startActivity(newActivity);
             }
 

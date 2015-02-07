@@ -2,6 +2,7 @@ package marcomessini.mybookmarks;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
@@ -70,7 +71,7 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
             //WS.check=1;
-            callNotify(WS.name);
+            callNotify(WS.name,WS.URL);
             WS.hash=hashNew;
         }
         else {
@@ -80,14 +81,22 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         }
     }
 
-    public void callNotify(String WSname){
+    public void callNotify(String WSname, String url){
         Log.e("NOTIFICA PARTITA"," WS="+WSname);
+        Intent intent=new Intent(this,WebViewA.class);
+        intent.putExtra("URL", url);
+        intent.putExtra("nomeSito",WSname);
+        //zero al posto di PendingIntent.FLAG_CANCEL_CURRENT
+        PendingIntent pi= PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder n  = new NotificationCompat.Builder(this)
-                .setContentTitle(WSname)
-                .setContentText("IS CHANGE")
-                .setSmallIcon(android.R.drawable.ic_dialog_email);
+                .setContentTitle(" - "+WSname+" - ")
+                .setContentText("IS CHANGED")
+                .setSmallIcon(android.R.drawable.ic_dialog_email)
+                .setContentIntent(pi)
+                .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n.build());
+
     }
 }
