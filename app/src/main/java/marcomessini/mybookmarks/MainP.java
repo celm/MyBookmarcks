@@ -1,7 +1,5 @@
 package marcomessini.mybookmarks;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -9,11 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,20 +14,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Switch;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-
-
-import static marcomessini.mybookmarks.DownloadWS.DownloadWebpageTask;
 
 
 public class MainP extends ActionBarActivity{
@@ -46,27 +28,29 @@ public class MainP extends ActionBarActivity{
     public String url;
     long timer;
     long timerA;
-
-
+    int pos;
+    AlarmManager alarmManager;
+    PendingIntent pending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_p);
 
-
-
         //alarm & Service
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent alarmIntent = new Intent(this,OnAlarmReceiver.class);
-        PendingIntent pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        pending = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
 
         //set timer
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
-        timer=pref.getLong("TIMER",60*15*1000);
-        timerA=timer;
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timerA,timerA, pending);
+        timer=pref.getLong("TIMER",-1);
+        Log.e("SET TIMER", " ON CREATE");
+        if (timer!=-1) {
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, timer, timer, pending);
+        }
+        Log.e("SET TIMER", " ON CREATE");
 
         //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
         //        SystemClock.elapsedRealtime() +
@@ -216,64 +200,79 @@ public class MainP extends ActionBarActivity{
     }
 
 
+    //set alarm
+    public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend, SharedPreferences sPref){
+        long temp=sPref.getLong("TIMER",-1);
+        if(timerS==-1){
+            alarmM.cancel(pend);
+            Log.e("ALARM SET","-DISABLE-");
+        }
+        else if(temp==timerS){
+                    alarmM.cancel(pend);
+                    alarmM.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,AlarmManager.INTERVAL_DAY,timerS, pend);
+                    Log.e("ALARM SET",""+timerS);
+                }
+
+        }
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_addGroup) {
             Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
             startActivityForResult(ActivityAddGroup, 1);
         }
         if (id == R.id.action_setTimer) {
-            final CharSequence[] items = {"2 Min","15 Min", "30 Min", "1 Hour","2 Hours"};
-            SharedPreferences pref = getPreferences(MODE_PRIVATE);
+            final CharSequence[] items = {"2 Min","15 Min", "30 Min", "1 Hour","2 Hours", "Disable Service"};
+            final long[] itemPos = {60*2*1000 , 60*15*1000 , 60*30*1000 , 60*60*1000 , 60*120*1000 ,-1};
+            final SharedPreferences pref = getPreferences(MODE_PRIVATE);
             final SharedPreferences.Editor edit= pref.edit();
-            //timer= pref.getLong("TIMER",60*15*1000);
+            long timerPos=pref.getLong("TIMER",-1);
+            for(int i=0;i<=items.length-1;i++){
+                if(itemPos[i]==timerPos){
+                    pos=i;
+                }
+            }
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
-            .setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            .setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
                     switch (item) {
                         case (0):
-                            edit.putLong("TIMER",60*2*1000);
+                            edit.putLong("TIMER", 60 * 2 * 1000);
                             edit.commit();
-                            timerA=60*2*1000;
-                            Log.e("Time set"," "+timer);;
+                            setAlarm(60*2*1000,alarmManager,pending,pref);
                             break;
                         case (1):
-                            edit.putLong("TIMER",60*15*1000);
+                            edit.putLong("TIMER", 60 * 15 * 1000);
                             edit.commit();
-                            timerA=60*15*1000;
-                            Log.e("Time set"," "+timer);
+                            setAlarm(60*15*1000,alarmManager,pending,pref);
                             break;
                         case (2):
-                            edit.putLong("TIMER",60*30*1000);
+                            edit.putLong("TIMER", 60 * 30 * 1000);
                             edit.commit();
-                            timerA=60*30*1000;
-                            Log.e("Time set"," "+timer);
+                            setAlarm(60*30*1000,alarmManager,pending,pref);
                             break;
                         case(3):
-                            edit.putLong("TIMER",60*60*1000);
+                            edit.putLong("TIMER", 60 * 60 * 1000);
                             edit.commit();
-                            Log.e("Time set"," "+timer);
-                            timerA=60*60*1000;
+                            setAlarm(60*60*1000,alarmManager,pending,pref);
                             break;
                         case(4):
-                            edit.putLong("TIMER",60*120*1000);
+                            edit.putLong("TIMER", 60 * 120 * 1000);
                             edit.commit();
-                            timerA=60*120*1000;
-                            Log.e("Time set"," "+timer);
+                            setAlarm(60*120*1000,alarmManager,pending,pref);
+                            break;
+                        case(5):
+                            edit.putLong("TIMER", -1);
+                            edit.commit();
+                            setAlarm(-1, alarmManager, pending, pref);
                             break;
                     }
                 }
             }).show();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
