@@ -15,7 +15,7 @@
             android:id="@+id/listWS"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:divider="#2ec3ae"
+            android:divider="#f46e6e"
             android:dividerHeight="2px">
         </ListView>
 

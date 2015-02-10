@@ -5,6 +5,24 @@
     android:orientation="horizontal"
     android:padding="5dip" >
 
+
+    <!--  immagine sinistra -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="45dip"
+        android:layout_height="45dip"
+        android:contentDescription="image"
+        android:src="@drawable/link_ws1"/>
+
+    </LinearLayout>
+
     <!--nome sito-->
     <TextView
         android:id="@+id/website"
@@ -28,7 +46,7 @@
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Web Site URL"
         android:textColor="#343434"
-        android:textSize="15dip" />
+        android:textSize="10dip" />
 
     <!--verifica se il sito è aggiornato
         rosso=no, verde=si-->
@@ -42,7 +60,8 @@
         android:layout_marginRight="5dp"
         android:text="UP TO DATE"
         android:textColor="#dfe8d5"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="10dip"/>
 
 
     <!--bottone per eliminare il sito-->

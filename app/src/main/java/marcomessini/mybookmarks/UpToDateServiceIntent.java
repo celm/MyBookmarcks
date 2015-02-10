@@ -87,9 +87,10 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
     }
 
     public void callNotify(WebSite WS){
+        //notifica
         Log.e("NOTIFICA PARTITA"," WS="+WS.name);
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(android.R.drawable.ic_dialog_email, "-"+WS.name+"-"+"IS CHANGED", System.currentTimeMillis());
+        Notification notification = new Notification(R.drawable.bookmark_notify, "-"+WS.name+"-"+"IS CHANGED", System.currentTimeMillis());
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notification.defaults |= Notification.DEFAULT_LIGHTS;

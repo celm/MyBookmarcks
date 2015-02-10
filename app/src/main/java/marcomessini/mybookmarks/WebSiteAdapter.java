@@ -1,6 +1,7 @@
 package marcomessini.mybookmarks;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,12 @@ public View getView(int position, View convertView, ViewGroup parent) {
         //controllo se il sito è aggiornato
         int check=valuesWS.get(position).check;
         if(check==1){
-            checkedTextView.setBackgroundColor(-16776961);
-            //background blu
+            int colorUp= Color.parseColor("#f46e6e");
+            checkedTextView.setBackgroundColor(colorUp);
+            //background rosso chiaro
         }
         else{
+            //grigio
             checkedTextView.setBackgroundColor(-12303292);
         }
         TextView textView = (TextView) rowView.findViewById(R.id.website);

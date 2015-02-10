@@ -53,7 +53,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         Intent intentListWS = getIntent();
         idListWS = intentListWS.getIntExtra("id_list", -1);
 
-        Toast.makeText(getApplicationContext(), "" + idGruppo, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "" + idGruppo, Toast.LENGTH_LONG).show();
 
         listView = (ListView) findViewById(R.id.listWS);
 
@@ -118,6 +118,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         };
 
          // ListView Item Click Listener
+        //webview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -129,6 +130,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 newActivity.putExtra("nomeSito", nome);
                 db.setCheckWS(valuesWS.get(position).id_WebSite,0);
                 valuesWS.get(position).check=0;
+                adapter.notifyDataSetChanged();
                 startActivity(newActivity);
             }
 
