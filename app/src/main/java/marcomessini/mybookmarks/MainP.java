@@ -27,7 +27,6 @@ public class MainP extends ActionBarActivity{
     ArrayList<Group> values1 = null;
     public String url;
     long timer;
-    long timerA;
     int pos;
     AlarmManager alarmManager;
     PendingIntent pending;
@@ -57,12 +56,15 @@ public class MainP extends ActionBarActivity{
         //                10 * 1000, pending);
                                 //-------------//
         setTitle("MyBookmarks - GROUP LIST -");
+
+
+
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
-         values1= db.getGroup();
+        //values1= db.getGroup();
                 //new Group(1,"social",3)
-        if (values1.isEmpty()){
+        /*if (values1.isEmpty()){
             Log.e("ArrayList Gruppo","vuoto");
             new AlertDialog.Builder(MainP.this)
                     .setTitle("There aren't any Groups")
@@ -72,20 +74,14 @@ public class MainP extends ActionBarActivity{
                             startActivityForResult(ActivityAddGroup, 1);
                         }
                     })
-                    /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing
-                        }
-                    })*/
                     .show();
-        };
+        }*/
 
-
-        adapter = new GroupsAdapter(this, values1);
+        //adapter = new GroupsAdapter(this, values1);
         //adapter.notifyDataSetChanged();
 
         // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,20 +93,7 @@ public class MainP extends ActionBarActivity{
                 Intent newActivity = new Intent(MainP.this, ListWebSIte.class);
                 newActivity.putExtra("id_gruppo",idG);
                 newActivity.putExtra("nome_gruppo",nomeGroup);
-
-
-                //per controllare se il sito è aggiornato
-                /*posizione=position;
-                int gruppo=values1.get(i).id_group;
-                ArrayList<WebSite> webSiteAr=DataBaseManager.getWebSite(gruppo);
-                if(webSiteAr.size()>0) {
-                    for (int i = 0; i <= webSiteAr.size(); i++) {
-                        WebSite ws = webSiteAr.get(i);
-                        DownloadWebpageTask mt = new DownloadWebpageTask(tc, ws);
-                        mt.execute(ws.URL);
-                    }
-                }*/
-                //parte l'actuvity --> da controllare
+                //parte l'actuvity
                 startActivity(newActivity);
             }
 
@@ -144,9 +127,28 @@ public class MainP extends ActionBarActivity{
         });
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        values1= db.getGroup();
+        if (values1.isEmpty()){
+            Log.e("ArrayList Gruppo","vuoto");
+            new AlertDialog.Builder(MainP.this)
+                    .setTitle("There aren't any Groups")
+                    .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
+                            startActivityForResult(ActivityAddGroup, 1);
+                        }
+                    })
+                    .show();
+        }
+        adapter = new GroupsAdapter(this, values1);
+        //adapter.notifyDataSetChanged();
 
-
-
+        // Assign adapter to ListView
+        listView.setAdapter(adapter);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
@@ -182,8 +184,6 @@ public class MainP extends ActionBarActivity{
             adapter.notifyDataSetChanged();
         }
     }*/
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -198,7 +198,6 @@ public class MainP extends ActionBarActivity{
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     //set alarm
     public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend, SharedPreferences sPref){

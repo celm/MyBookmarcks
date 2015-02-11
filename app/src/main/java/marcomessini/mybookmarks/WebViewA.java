@@ -37,6 +37,12 @@ public class WebViewA extends ActionBarActivity {
 
     }
 
+
+    //implementare metodo onStart, su onNewIntent devo mettere setIntent(intent)
+    //fare metodo
+    // onStop(){
+    //  websiteA.destroy();
+    // }
     @Override
     public void onNewIntent(Intent intent){
         super.onNewIntent(intent);
