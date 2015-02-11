@@ -90,7 +90,7 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         //notifica
         Log.e("NOTIFICA PARTITA"," WS="+WS.name);
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.drawable.bookmark_notify, "-"+WS.name+"-"+"IS CHANGED", System.currentTimeMillis());
+        Notification notification = new Notification(R.drawable.bookmark_notify, " - "+WS.name+" - "+"HAS CHANGED", System.currentTimeMillis());
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notification.defaults |= Notification.DEFAULT_LIGHTS;
@@ -101,7 +101,7 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         intent.putExtra("URL", WS.URL);
         intent.putExtra("nomeSito", WS.name);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,WS.id_WebSite,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setLatestEventInfo(this, "-"+WS.name+"-"+"IS CHANGED", WS.name, pendingIntent);
+        notification.setLatestEventInfo(this, " - "+WS.name+" - "+"HAS CHANGED", WS.URL, pendingIntent);
         notificationManager.notify(WS.id_WebSite, notification);
 
         /*//Android dev

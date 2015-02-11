@@ -25,7 +25,11 @@ public class WebViewA extends ActionBarActivity {
         myWebView = (WebView) findViewById(R.id.webView);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setLoadsImagesAutomatically(true);
+    }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
         Intent intent = getIntent();
         idWS= intent.getIntExtra("IDWS",0);
         url= intent.getStringExtra("URL");
@@ -34,28 +38,16 @@ public class WebViewA extends ActionBarActivity {
 
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
-
     }
-
-
-    //implementare metodo onStart, su onNewIntent devo mettere setIntent(intent)
-    //fare metodo
-    // onStop(){
-    //  websiteA.destroy();
-    // }
+    /*@Override
+    protected void onStop(){
+        super.onStop();
+        this.onDestroy();
+    }*/
     @Override
     public void onNewIntent(Intent intent){
         super.onNewIntent(intent);
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            idWS= intent.getIntExtra("IDWS",0);
-            url= intent.getStringExtra("URL");
-            nome= intent.getStringExtra("nomeSito");
-            setTitle("WebSite "+nome);
-
-            myWebView.setWebViewClient(new WebViewClient());
-            myWebView.loadUrl(url);
-        }
+        setIntent(intent);
     }
 
 

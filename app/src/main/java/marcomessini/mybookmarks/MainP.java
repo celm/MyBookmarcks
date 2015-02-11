@@ -27,10 +27,9 @@ public class MainP extends ActionBarActivity{
     GroupsAdapter adapter;
     ArrayList<Group> values1 = null;
     public String url;
-    long timer;
-    int pos;
     AlarmManager alarmManager;
     PendingIntent pending;
+    final long[] itemPos = {60*2*1000 , 60*15*1000 , 60*30*1000 , 60*60*1000 , 60*120*1000 ,-1};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +44,10 @@ public class MainP extends ActionBarActivity{
 
         //set timer
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
-        timer=pref.getLong("TIMER",-1);
+        int posTimer=pref.getInt("TIMER",-1);
         Log.e("SET TIMER", " ON CREATE");
-        if (timer!=-1) {
-            setAlarm(timer,alarmManager,pending);
+        if (posTimer!=-1) {
+            setAlarm(posTimer,alarmManager,pending);
         }
         Log.e("SET TIMER", " ON CREATE");
 
@@ -64,19 +63,6 @@ public class MainP extends ActionBarActivity{
         listView = (ListView) findViewById(R.id.list);
 
         //values1= db.getGroup();
-                //new Group(1,"social",3)
-        /*if (values1.isEmpty()){
-            Log.e("ArrayList Gruppo","vuoto");
-            new AlertDialog.Builder(MainP.this)
-                    .setTitle("There aren't any Groups")
-                    .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent ActivityAddGroup = new Intent(MainP.this, AddGroup.class);
-                            startActivityForResult(ActivityAddGroup, 1);
-                        }
-                    })
-                    .show();
-        }*/
 
         //adapter = new GroupsAdapter(this, values1);
         //adapter.notifyDataSetChanged();
@@ -117,11 +103,11 @@ public class MainP extends ActionBarActivity{
                                 //adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
                             }
-                        })
+                        })*/
                         .show();
                 return true;
             }
@@ -167,24 +153,6 @@ public class MainP extends ActionBarActivity{
         }
     }
 
-    /*@Override
-    public void done(int hash, WebSite webSite){
-        int newHash=hash;
-        int oldHash=webSite.hash;
-        if(newHash!=oldHash){
-            Log.e("HASH MODIFICATO "+webSite.id_WebSite," new H "+newHash+" old H"+oldHash);
-            db.setCheckWS(webSite.id_WebSite,1);
-            db.updateHash(webSite.id_WebSite,newHash);
-            webSite.check=1;
-            adapter.notifyDataSetChanged();
-        }
-        else{
-            Log.e("HASH INVARIATO "+webSite.id_WebSite," old H"+oldHash);
-            db.setCheckWS(webSite.id_WebSite,0);
-            webSite.check=0;
-            adapter.notifyDataSetChanged();
-        }
-    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -201,12 +169,13 @@ public class MainP extends ActionBarActivity{
     }
 
     //set alarm
-    public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend){
-        if(timerS!=-1){
+    public void setAlarm(int position, AlarmManager alarmM,PendingIntent pend){
+        if(position!=-1){
             alarmM.cancel(pend);
+            long timerS=itemPos[position];
             Calendar cal = Calendar.getInstance();
             long wkupTime = cal.getTimeInMillis() + timerS;
-            alarmM.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timerS,timerS, pend);
+            alarmM.setInexactRepeating(AlarmManager.RTC,wkupTime,timerS, pend);
             Log.e("ALARM SET"," "+timerS);
         }
         else{
@@ -225,48 +194,42 @@ public class MainP extends ActionBarActivity{
         }
         if (id == R.id.action_setTimer) {
             final CharSequence[] items = {"2 Min","15 Min", "30 Min", "1 Hour","2 Hours", "Disable Service"};
-            final long[] itemPos = {60*2*1000 , 60*15*1000 , 60*30*1000 , 60*60*1000 , 60*120*1000 ,-1};
             final SharedPreferences pref = getPreferences(MODE_PRIVATE);
             final SharedPreferences.Editor edit= pref.edit();
-            long timerPos=pref.getLong("TIMER",-1);
-            for(int i=0;i<=items.length-1;i++){
-                if(itemPos[i]==timerPos){
-                    pos=i;
-                }
-            }
+            int posT=pref.getInt("TIMER",-1);
             //sistema cancella FOR
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
-            .setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
+            .setSingleChoiceItems(items, posT, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
                     switch (item) {
                         case (0):
-                            edit.putLong("TIMER", 60 * 2 * 1000);
+                            edit.putInt("TIMER", 0);
                             edit.commit();
-                            setAlarm(60*2*1000,alarmManager,pending);
+                            setAlarm(0,alarmManager,pending);
                             break;
                         case (1):
-                            edit.putLong("TIMER", 60 * 15 * 1000);
+                            edit.putInt("TIMER", 1);
                             edit.commit();
-                            setAlarm(60*15*1000,alarmManager,pending);
+                            setAlarm(1,alarmManager,pending);
                             break;
                         case (2):
-                            edit.putLong("TIMER", 60 * 30 * 1000);
+                            edit.putInt("TIMER",2);
                             edit.commit();
-                            setAlarm(60*30*1000,alarmManager,pending);
+                            setAlarm(2,alarmManager,pending);
                             break;
                         case(3):
-                            edit.putLong("TIMER", 60 * 60 * 1000);
+                            edit.putInt("TIMER", 3);
                             edit.commit();
-                            setAlarm(60*60*1000,alarmManager,pending);
+                            setAlarm(3,alarmManager,pending);
                             break;
                         case(4):
-                            edit.putLong("TIMER", 60 * 120 * 1000);
+                            edit.putInt("TIMER", 4);
                             edit.commit();
-                            setAlarm(60*120*1000,alarmManager,pending);
+                            setAlarm(4,alarmManager,pending);
                             break;
                         case(5):
-                            edit.putLong("TIMER", -1);
+                            edit.putInt("TIMER", -1);
                             edit.commit();
                             setAlarm(-1, alarmManager, pending);
                             break;
