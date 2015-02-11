@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MainP extends ActionBarActivity{
@@ -47,7 +48,7 @@ public class MainP extends ActionBarActivity{
         timer=pref.getLong("TIMER",-1);
         Log.e("SET TIMER", " ON CREATE");
         if (timer!=-1) {
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, timer, timer, pending);
+            setAlarm(timer,alarmManager,pending);
         }
         Log.e("SET TIMER", " ON CREATE");
 
@@ -203,8 +204,10 @@ public class MainP extends ActionBarActivity{
     public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend){
         if(timerS!=-1){
             alarmM.cancel(pend);
+            Calendar cal = Calendar.getInstance();
+            long wkupTime = cal.getTimeInMillis() + timerS;
             alarmM.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timerS,timerS, pend);
-            Log.e("ALARM SET","-DISABLE-"+timerS);
+            Log.e("ALARM SET"," "+timerS);
         }
         else{
             alarmM.cancel(pend);
