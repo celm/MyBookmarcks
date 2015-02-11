@@ -216,6 +216,20 @@ public class DataBaseManager {
         return false;
     }
 
+    //modifica nome sito
+    static boolean modWSname(int id_ws, String newNameWS){
+        ContentValues cvW = new ContentValues();
+        cvW.put(KEY_NAMEWS,newNameWS);
+        String [] id_WS={Integer.toString(id_ws)};
+        open();
+        int ris=db.update(TABLE_WEBSITE,cvW,KEY_IDWS+"=?",id_WS);
+        close();
+        if(ris>0){
+            return true;
+        }
+        return false;
+    }
+
     //prendere hash
     //inutile, almeno per ora
     public static int takeHash(int WS){

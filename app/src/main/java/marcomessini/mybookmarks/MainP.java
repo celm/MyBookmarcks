@@ -44,7 +44,7 @@ public class MainP extends ActionBarActivity{
 
         //set timer
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
-        int posTimer=pref.getInt("TIMER",-1);
+        int posTimer=pref.getInt("TIMER",5);
         Log.e("SET TIMER", " ON CREATE");
         if (posTimer!=5) {
             setAlarm(posTimer,alarmManager,pending);

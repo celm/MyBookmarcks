@@ -62,12 +62,12 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
         valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));*/
 
-        valuesWS = DataBaseManager.getWebSite(idGruppo);
+        /*valuesWS = DataBaseManager.getWebSite(idGruppo);
 
         adapter = new WebSiteAdapter(this, valuesWS);
 
         // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
 
         //controllare se tutti i siti sono aggiornati
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -95,7 +95,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        //controllo se vuoto
+        /*//controllo se vuoto
         if (valuesWS.isEmpty()) {
             Log.e("ArrayList Gruppo", "vuoto");
             new AlertDialog.Builder(ListWebSIte.this)
@@ -108,14 +108,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                             //activity for result
                             startActivityForResult(ActivityAddWS, 1);
                         }
-                    })
-                    /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing
-                        }
-                    })*/
-                    .show();
-        };
+                    }).show();
+        }*/
 
          // ListView Item Click Listener
         //webview
@@ -162,6 +156,33 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        valuesWS = DataBaseManager.getWebSite(idGruppo);
+
+        //controllo se vuoto
+        if (valuesWS.isEmpty()) {
+            Log.e("ArrayList Gruppo", "vuoto");
+            new AlertDialog.Builder(ListWebSIte.this)
+                    .setTitle("There aren't any WebSite")
+                    .setPositiveButton("Add Now", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent ActivityAddWS = new Intent(ListWebSIte.this, AddWebSite.class);
+                            ActivityAddWS.putExtra("id_list", idListWS);
+                            ActivityAddWS.putExtra("id_gruppo", idGruppo);
+                            //activity for result
+                            startActivityForResult(ActivityAddWS, 1);
+                        }
+                    }).show();
+        }
+
+        adapter = new WebSiteAdapter(this, valuesWS);
+
+        // Assign adapter to ListView
+        listView.setAdapter(adapter);
     }
 
     @Override

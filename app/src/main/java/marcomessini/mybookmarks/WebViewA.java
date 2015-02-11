@@ -1,12 +1,16 @@
 package marcomessini.mybookmarks;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -31,7 +35,7 @@ public class WebViewA extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
         Intent intent = getIntent();
-        idWS= intent.getIntExtra("IDWS",0);
+        idWS= intent.getIntExtra("IDWS", 0);
         url= intent.getStringExtra("URL");
         nome= intent.getStringExtra("nomeSito");
         setTitle("WebSite "+nome);
@@ -64,6 +68,27 @@ public class WebViewA extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.action_modWS) {
+            final EditText input = new EditText(this);
+            new AlertDialog.Builder(this)
+                    .setTitle("Modify WebSite's Name")
+                    .setView(input)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //per modificare il nome
+                            String value = input.getText().toString();
+                            DataBaseManager.modWSname(idWS,value);
+                            setTitle("WebSite " + value);
+                            Log.e("NOME WS MOD ","");
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    }).show();
+        }
 
         return super.onOptionsItemSelected(item);
     }
