@@ -200,7 +200,17 @@ public class MainP extends ActionBarActivity{
             //sistema cancella FOR
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
-            .setSingleChoiceItems(items, posT, new DialogInterface.OnClickListener() {
+            .setSingleChoiceItems(items,posT,new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    edit.putInt("TIMER",which);
+                    edit.commit();
+                    setAlarm(which,alarmManager,pending);
+                    Log.e("ALARM SET",""+items[which]);
+                }
+            }).show();
+            /*.setSingleChoiceItems(items, posT, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int item) {
                     switch (item) {
                         case (0):
@@ -235,7 +245,7 @@ public class MainP extends ActionBarActivity{
                             break;
                     }
                 }
-            }).show();
+            }).show();*/
         }
         return super.onOptionsItemSelected(item);
     }
