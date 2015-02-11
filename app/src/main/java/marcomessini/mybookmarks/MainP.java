@@ -46,7 +46,7 @@ public class MainP extends ActionBarActivity{
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
         int posTimer=pref.getInt("TIMER",-1);
         Log.e("SET TIMER", " ON CREATE");
-        if (posTimer!=-1) {
+        if (posTimer!=5) {
             setAlarm(posTimer,alarmManager,pending);
         }
         Log.e("SET TIMER", " ON CREATE");
@@ -170,17 +170,17 @@ public class MainP extends ActionBarActivity{
 
     //set alarm
     public void setAlarm(int position, AlarmManager alarmM,PendingIntent pend){
-        if(position!=-1){
+        if(position!=5){
             alarmM.cancel(pend);
             long timerS=itemPos[position];
             Calendar cal = Calendar.getInstance();
             long wkupTime = cal.getTimeInMillis() + timerS;
             alarmM.setInexactRepeating(AlarmManager.RTC,wkupTime,timerS, pend);
-            Log.e("ALARM SET"," "+timerS);
+            Log.e("ALARM SETTER"," "+timerS);
         }
         else{
             alarmM.cancel(pend);
-            Log.e("ALARM SET","-DISABLE-");
+            Log.e("ALARM SETTER","-DISABLE-");
         }
     }
 
@@ -196,7 +196,7 @@ public class MainP extends ActionBarActivity{
             final CharSequence[] items = {"2 Min","15 Min", "30 Min", "1 Hour","2 Hours", "Disable Service"};
             final SharedPreferences pref = getPreferences(MODE_PRIVATE);
             final SharedPreferences.Editor edit= pref.edit();
-            int posT=pref.getInt("TIMER",-1);
+            int posT=pref.getInt("TIMER",5);
             //sistema cancella FOR
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
