@@ -200,19 +200,17 @@ public class MainP extends ActionBarActivity{
     }
 
     //set alarm
-    public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend, SharedPreferences sPref){
-        long temp=sPref.getLong("TIMER",-1);
-        if(timerS==-1){
+    public void setAlarm(long timerS, AlarmManager alarmM,PendingIntent pend){
+        if(timerS!=-1){
+            alarmM.cancel(pend);
+            alarmM.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,timerS,timerS, pend);
+            Log.e("ALARM SET","-DISABLE-"+timerS);
+        }
+        else{
             alarmM.cancel(pend);
             Log.e("ALARM SET","-DISABLE-");
         }
-        else if(temp==timerS){
-                    alarmM.cancel(pend);
-                    alarmM.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,AlarmManager.INTERVAL_DAY,timerS, pend);
-                    Log.e("ALARM SET",""+timerS);
-                }
-
-        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
@@ -233,6 +231,7 @@ public class MainP extends ActionBarActivity{
                     pos=i;
                 }
             }
+            //sistema cancella FOR
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
             .setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
@@ -241,32 +240,32 @@ public class MainP extends ActionBarActivity{
                         case (0):
                             edit.putLong("TIMER", 60 * 2 * 1000);
                             edit.commit();
-                            setAlarm(60*2*1000,alarmManager,pending,pref);
+                            setAlarm(60*2*1000,alarmManager,pending);
                             break;
                         case (1):
                             edit.putLong("TIMER", 60 * 15 * 1000);
                             edit.commit();
-                            setAlarm(60*15*1000,alarmManager,pending,pref);
+                            setAlarm(60*15*1000,alarmManager,pending);
                             break;
                         case (2):
                             edit.putLong("TIMER", 60 * 30 * 1000);
                             edit.commit();
-                            setAlarm(60*30*1000,alarmManager,pending,pref);
+                            setAlarm(60*30*1000,alarmManager,pending);
                             break;
                         case(3):
                             edit.putLong("TIMER", 60 * 60 * 1000);
                             edit.commit();
-                            setAlarm(60*60*1000,alarmManager,pending,pref);
+                            setAlarm(60*60*1000,alarmManager,pending);
                             break;
                         case(4):
                             edit.putLong("TIMER", 60 * 120 * 1000);
                             edit.commit();
-                            setAlarm(60*120*1000,alarmManager,pending,pref);
+                            setAlarm(60*120*1000,alarmManager,pending);
                             break;
                         case(5):
                             edit.putLong("TIMER", -1);
                             edit.commit();
-                            setAlarm(-1, alarmManager, pending, pref);
+                            setAlarm(-1, alarmManager, pending);
                             break;
                     }
                 }
