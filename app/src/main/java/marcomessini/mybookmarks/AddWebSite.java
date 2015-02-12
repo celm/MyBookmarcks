@@ -6,17 +6,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.net.URL;
 
 
@@ -28,19 +24,15 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     Button add;
     public static String newNameWS;
     public static String newURL;
-    public static int hash;
     public static int id_g;
     TaskCallback tc=this;
     WebSite ws;
-    boolean ok=true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_web_site);
-
-
 
         final Intent intent= getIntent();
         id_g=intent.getIntExtra("id_gruppo",-1);
@@ -54,8 +46,6 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
 
             @Override
             public void onClick(View arg0) {
-
-               // if(ok){
                     //per prendere il nome
                     newNameWS = nameWS.getText().toString();
                     newURL=URL.getText().toString();
@@ -72,7 +62,6 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
                         }
                         else if (!newURL.contains("http://") && !newURL.contains("https://"))
                             newURL = "http://" + newURL;
-                        //URL urlW;
                         try {
                             URL urlW = new URL(newURL);
                             String newURLWS=urlW.toString();
@@ -85,7 +74,7 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
                                 mt.execute(newURLWS);
 
                             } else {
-                                //alert if no connection
+                                //alert se nn c'è connesione
                                 Toast.makeText(getApplicationContext(),"No network connection available",Toast.LENGTH_LONG).show();
                             }
 
@@ -96,9 +85,8 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
                     }
                     else{
                         //stringhe nn inserite(non fare niente)
+                        Toast.makeText(getApplicationContext(),"INSERT WEBSITE",Toast.LENGTH_LONG).show();
                     }
-                //}
-                //ok=false;
             }
         });
     }
@@ -107,7 +95,7 @@ public class AddWebSite extends ActionBarActivity implements TaskCallback{
     @Override
     public void done(int hash,WebSite ws) {
         if(hash == -1){
-            Toast.makeText(this,"-CONNETION LOST- IMPOSSIBLE TO ADD WEB SITE, TRY AGAIN",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"- CONNETION LOST OR URL HAS INVALID - TRY AGAIN",Toast.LENGTH_LONG).show();
         }
         else {
             Intent returnIntent = new Intent();

@@ -1,7 +1,5 @@
 package marcomessini.mybookmarks;
 
-import java.net.URL;
-
 /**
  * Created by marcomessini on 19/01/15.
  */

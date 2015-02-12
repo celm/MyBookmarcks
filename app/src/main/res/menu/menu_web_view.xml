@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="marcomessini.mybookmarks.WebViewA">
 
-    <item android:id="@+id/action_modWS" android:title="@string/action_modWS"
-        android:actionViewClass="android.widget.SeekBar" app:showAsAction="never" />
+    <!--<item android:id="@+id/action_modWS" android:title="@string/action_modWS"
+        android:actionViewClass="android.widget.SeekBar" app:showAsAction="never" />-->
 </menu>

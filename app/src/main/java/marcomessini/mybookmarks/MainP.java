@@ -51,13 +51,7 @@ public class MainP extends ActionBarActivity{
         }
         Log.e("SET TIMER", " ON CREATE");
 
-        //alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-        //        SystemClock.elapsedRealtime() +
-        //                10 * 1000, pending);
-                                //-------------//
         setTitle("MyBookmarks - GROUP LIST -");
-
-
 
         //Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
@@ -103,11 +97,11 @@ public class MainP extends ActionBarActivity{
                                 //adapter.notifyDataSetChanged();
                             }
                         })
-                        /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
                             }
-                        })*/
+                        })
                         .show();
                 return true;
             }
@@ -210,42 +204,6 @@ public class MainP extends ActionBarActivity{
                     Log.e("ALARM SET",""+items[which]);
                 }
             }).show();
-            /*.setSingleChoiceItems(items, posT, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int item) {
-                    switch (item) {
-                        case (0):
-                            edit.putInt("TIMER", 0);
-                            edit.commit();
-                            setAlarm(0,alarmManager,pending);
-                            break;
-                        case (1):
-                            edit.putInt("TIMER", 1);
-                            edit.commit();
-                            setAlarm(1,alarmManager,pending);
-                            break;
-                        case (2):
-                            edit.putInt("TIMER",2);
-                            edit.commit();
-                            setAlarm(2,alarmManager,pending);
-                            break;
-                        case(3):
-                            edit.putInt("TIMER", 3);
-                            edit.commit();
-                            setAlarm(3,alarmManager,pending);
-                            break;
-                        case(4):
-                            edit.putInt("TIMER", 4);
-                            edit.commit();
-                            setAlarm(4,alarmManager,pending);
-                            break;
-                        case(5):
-                            edit.putInt("TIMER", -1);
-                            edit.commit();
-                            setAlarm(-1, alarmManager, pending);
-                            break;
-                    }
-                }
-            }).show();*/
         }
         return super.onOptionsItemSelected(item);
     }

@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 public class WebViewA extends ActionBarActivity {
@@ -43,11 +42,7 @@ public class WebViewA extends ActionBarActivity {
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
     }
-    /*@Override
-    protected void onStop(){
-        super.onStop();
-        this.onDestroy();
-    }*/
+
     @Override
     public void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -64,10 +59,8 @@ public class WebViewA extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+/*
 
         if (id == R.id.action_modWS) {
             final EditText input = new EditText(this);
@@ -89,6 +82,7 @@ public class WebViewA extends ActionBarActivity {
                         }
                     }).show();
         }
+*/
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,10 +1,8 @@
 package marcomessini.mybookmarks;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,12 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -34,7 +29,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     DataBaseManager db = new DataBaseManager(this);
     WebSiteAdapter adapter;
     ArrayList<WebSite> valuesWS;
-    private Handler handler = new Handler();
     int count=0;
     TaskCallback tc=this;
 
@@ -52,8 +46,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
 
         Intent intentListWS = getIntent();
         idListWS = intentListWS.getIntExtra("id_list", -1);
-
-        //Toast.makeText(getApplicationContext(), "" + idGruppo, Toast.LENGTH_LONG).show();
 
         listView = (ListView) findViewById(R.id.listWS);
 
@@ -90,10 +82,13 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 }
             }
         });
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+        //colori scroll
+        swipeLayout.setColorScheme(
+                android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+                android.R.color.holo_red_light
+        );
 
         /*//controllo se vuoto
         if (valuesWS.isEmpty()) {
@@ -162,7 +157,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     protected void onStart(){
         super.onStart();
         valuesWS = DataBaseManager.getWebSite(idGruppo);
-
         //controllo se vuoto
         if (valuesWS.isEmpty()) {
             Log.e("ArrayList Gruppo", "vuoto");
@@ -178,10 +172,8 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                         }
                     }).show();
         }
-
         adapter = new WebSiteAdapter(this, valuesWS);
-
-        // Assign adapter to ListView
+        //assegno l'adapter alla listview
         listView.setAdapter(adapter);
     }
 
@@ -248,9 +240,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
             int id = item.getItemId();
 
             //noinspection SimplifiableIfStatement

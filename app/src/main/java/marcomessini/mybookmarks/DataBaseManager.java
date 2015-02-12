@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.widget.Adapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -77,7 +80,7 @@ public class DataBaseManager {
         return valuesWS;
     }
 
-    //funzioni per la tabella gruppi
+    //METODI
 
     //add gruppo
     public static long addGroup(String name) {
@@ -108,8 +111,33 @@ public class DataBaseManager {
         return res;
     }
 
-    //
-    //see table
+    //show all groups async
+    public static void getGroupAsync(ListView lv){
+        new AsyncTask<Void,Void,ArrayList<Group>>(){
+            @Override
+            protected ArrayList<Group> doInBackground(Void... params) {
+                open();
+                Cursor cursor = db.query(TABLE_GROUPS, new String[]{KEY_ID, KEY_NAME}, null, null, null, null, null);
+                ArrayList<Group> ris= new ArrayList<Group>();
+                while (cursor.moveToNext()) {
+                    int ID = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+                    String name= cursor.getString(cursor.getColumnIndex(KEY_NAME));
+                    Cursor cursorWS= db.rawQuery("select * from website where id_group = ?", new String[] { Integer.toString(ID) });
+                    int risCount=cursorWS.getCount();
+                    ris.add(new Group(ID,name,risCount));
+                }
+                close();
+                return ris;
+            }
+            @Override
+            protected void onPostExecute(ArrayList<Group> al){
+                ArrayList<Group> value = al;
+                return;
+            }
+        };
+    }
+
+    //show all group
     public static ArrayList<Group> getGroup() {
         open();
         Cursor cursor = db.query(TABLE_GROUPS, new String[]{KEY_ID, KEY_NAME}, null, null, null, null, null);
@@ -125,16 +153,6 @@ public class DataBaseManager {
         return ris;
     }
 
-    //funzione conta siti per ogni gruppo
-    public int countWSofG(int group){
-        open();
-        Cursor cursor= db.rawQuery("select count(*) from website where id_group = ?",new String[]{Integer.toString(group)}, null);
-        close();
-        int ris=cursor.getInt(0);
-        return ris;
-    }
-
-
     //funzioni tabella WebSite
     public static long addWebSite(int idG, String url, String nameWS, int hash, int check_ws){
         ContentValues initialValuesWS = createContentValuesWS(idG, url, nameWS, hash, check_ws);
@@ -143,6 +161,8 @@ public class DataBaseManager {
         close();
         return resW;
     }
+
+    //show all WS Async
 
     //show all WS
     public static ArrayList<WebSite> getWebSite(int IDG) {
@@ -159,18 +179,6 @@ public class DataBaseManager {
         }
         close();
         return ris;
-    }
-
-    //check se il sito è aggiornato
-    public static boolean checkUpdateWS(int id_ws){
-        open();
-        Cursor cursor=db.rawQuery("select id_ws from website where check_ws = ?",new String[]{Integer.toString(1)});
-        close();
-        int id_WS=cursor.getInt(cursor.getColumnIndex(KEY_IDWS));
-        if(id_WS==id_ws){
-            return true;
-        }
-        return false;
     }
 
     //setta la variabile check
@@ -190,7 +198,6 @@ public class DataBaseManager {
     }
 
     //aggiorna hash
-    //da rifare??
     public static int updateHASH(int id_ws,int newHash){
         ContentValues cv = new ContentValues();
         int NEWHASH=newHash;
@@ -202,6 +209,7 @@ public class DataBaseManager {
         close();
         return ris;
     }
+
     //modifica nome gruppo
     public boolean modGroupName(int id_g, String newName){
         ContentValues cv = new ContentValues();
@@ -229,15 +237,4 @@ public class DataBaseManager {
         }
         return false;
     }
-
-    //prendere hash
-    //inutile, almeno per ora
-    public static int takeHash(int WS){
-        open();
-        Cursor cursor= db.rawQuery("SELECT hash FROM website WHERE id_ws =?",new String[]{Integer.toString(WS)});
-        int ris=cursor.getColumnIndex(KEY_HASH);
-        close();
-        return ris;
-    }
-
 }

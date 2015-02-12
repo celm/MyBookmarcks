@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,8 +29,6 @@ public class GroupsAdapter extends ArrayAdapter<Group> {
             View rowView = inflater.inflate(R.layout.custom_layout, parent, false);
             TextView textView = (TextView) rowView.findViewById(R.id.title);
             TextView textView1 = (TextView) rowView.findViewById(R.id.description);
-            //ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
-
             textView.setText(values.get(position).name);
             textView1.setText(""+values.get(position).NSiti);
 
