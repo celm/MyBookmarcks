@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
-import android.widget.Adapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -111,32 +108,6 @@ public class DataBaseManager {
         return res;
     }
 
-    //show all groups async
-    public static void getGroupAsync(ListView lv){
-        new AsyncTask<Void,Void,ArrayList<Group>>(){
-            @Override
-            protected ArrayList<Group> doInBackground(Void... params) {
-                open();
-                Cursor cursor = db.query(TABLE_GROUPS, new String[]{KEY_ID, KEY_NAME}, null, null, null, null, null);
-                ArrayList<Group> ris= new ArrayList<Group>();
-                while (cursor.moveToNext()) {
-                    int ID = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-                    String name= cursor.getString(cursor.getColumnIndex(KEY_NAME));
-                    Cursor cursorWS= db.rawQuery("select * from website where id_group = ?", new String[] { Integer.toString(ID) });
-                    int risCount=cursorWS.getCount();
-                    ris.add(new Group(ID,name,risCount));
-                }
-                close();
-                return ris;
-            }
-            @Override
-            protected void onPostExecute(ArrayList<Group> al){
-                ArrayList<Group> value = al;
-                return;
-            }
-        };
-    }
-
     //show all group
     public static ArrayList<Group> getGroup() {
         open();
@@ -217,20 +188,6 @@ public class DataBaseManager {
         String [] id_group={Integer.toString(id_g)};
         open();
         int ris=db.update(TABLE_GROUPS,cv,KEY_ID+"=?",id_group);
-        close();
-        if(ris>0){
-            return true;
-        }
-        return false;
-    }
-
-    //modifica nome sito
-    static boolean modWSname(int id_ws, String newNameWS){
-        ContentValues cvW = new ContentValues();
-        cvW.put(KEY_NAMEWS,newNameWS);
-        String [] id_WS={Integer.toString(id_ws)};
-        open();
-        int ris=db.update(TABLE_WEBSITE,cvW,KEY_IDWS+"=?",id_WS);
         close();
         if(ris>0){
             return true;

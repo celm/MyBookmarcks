@@ -23,8 +23,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
     SwipeRefreshLayout swipeLayout;
     int idGruppo;
     int idListWS;
-    int i;
-    boolean exe = false;
     String nameGroup;
     DataBaseManager db = new DataBaseManager(this);
     WebSiteAdapter adapter;
@@ -49,11 +47,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
 
         listView = (ListView) findViewById(R.id.listWS);
 
-        //elementi di prova
-        /*ArrayList<WebSite> valuesWS= new ArrayList<WebSite>();
-        valuesWS.add(new WebSite(1,1,"La Gazzetta","http://www.lagazzetta.it","jkhgajyfjhvzf"));
-        valuesWS.add(new WebSite(2,2,"Lercio","http://www.lercio.it","kjhgakjdgiu"));*/
-
         /*valuesWS = DataBaseManager.getWebSite(idGruppo);
 
         adapter = new WebSiteAdapter(this, valuesWS);
@@ -68,7 +61,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
             public void onRefresh() {
                 Log.e(getClass().getSimpleName(), "refresh");
                 count=0;
-                for (i = 0; i <= valuesWS.size() - 1; i++) {
+                for (int i = 0; i <= valuesWS.size() - 1; i++) {
                     Log.e("CICLO", "" + i);
                     String url = valuesWS.get(i).URL;
                     Log.e("url ciclo", i + " - " + url);
@@ -76,9 +69,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                     webSite=valuesWS.get(i);
                     DownloadWS.DownloadWebpageTask mt = new DownloadWS.DownloadWebpageTask(tc,webSite);
                     mt.execute(url);
-                    if (i == valuesWS.size() - 1) {
-                        exe = true;
-                    }
                 }
             }
         });
@@ -193,8 +183,6 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
                 Log.e("hash inserito", "" + hashIns);
                 adapter.add(new WebSite(id_WS, gruppo, nameWS, url, hashIns, 0));
             }
-            if (resultCode == RESULT_CANCELED) {
-            }
         }
     }
 
@@ -210,7 +198,7 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
         if (hashNew != hashOld) {
             Log.e("HASH cambiato", " id_ws " + WS.id_WebSite);
             db.setCheckWS(WS.id_WebSite, 1);
-            db.updateHASH(WS.id_WebSite, hashNew);//non funziona correttamente(corretta)?!-->da provare
+            db.updateHASH(WS.id_WebSite, hashNew);
             //Log.e("hash new inserito"," "+ins);
             Log.e("NEW HASH",""+hashNew);
             Log.e("OLD HASH",""+hashOld);
@@ -224,10 +212,10 @@ public class ListWebSIte extends ActionBarActivity implements TaskCallback {
             adapter.notifyDataSetChanged();
             Log.e("HASH invariato"," id_ws " +WS.id_WebSite);
         }
+        //count per sapere quando terminare lo scrollView
         if(count==valuesWS.size() - 1){
             swipeLayout.setRefreshing(false);
         }
-        //count per sapere quando terminare lo scrollView
         count++;
     }
 

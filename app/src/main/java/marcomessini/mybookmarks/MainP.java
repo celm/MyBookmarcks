@@ -45,10 +45,7 @@ public class MainP extends ActionBarActivity{
         //set timer
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
         int posTimer=pref.getInt("TIMER",5);
-        Log.e("SET TIMER", " ON CREATE");
-        if (posTimer!=5) {
-            setAlarm(posTimer,alarmManager,pending);
-        }
+        setAlarm(posTimer,alarmManager,pending);
         Log.e("SET TIMER", " ON CREATE");
 
         setTitle("MyBookmarks - GROUP LIST -");
@@ -142,8 +139,6 @@ public class MainP extends ActionBarActivity{
                 int id_G=(int)idWS;
                 adapter.add(new Group(id_G,name,0));
             }
-            if (resultCode == RESULT_CANCELED) {
-            }
         }
     }
 
@@ -191,7 +186,6 @@ public class MainP extends ActionBarActivity{
             final SharedPreferences pref = getPreferences(MODE_PRIVATE);
             final SharedPreferences.Editor edit= pref.edit();
             int posT=pref.getInt("TIMER",5);
-            //sistema cancella FOR
             new AlertDialog.Builder(this)
             .setTitle("Set Timer for UpDate")
             .setSingleChoiceItems(items,posT,new DialogInterface.OnClickListener() {

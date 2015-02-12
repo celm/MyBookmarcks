@@ -13,6 +13,7 @@ import java.net.URL;
 /**
  * Created by marcomessini on 22/01/15.
  */
+
 public class DownloadWS {
 
     public static class DownloadWebpageTask extends AsyncTask<String, Void, Integer> {

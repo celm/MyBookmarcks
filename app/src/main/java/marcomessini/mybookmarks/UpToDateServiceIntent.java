@@ -25,9 +25,7 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
         Log.d(TAG, "Service Started!");
-
             try {
                 ArrayList<Group> valueG=DataBaseManager.getGroup();
                 for(int i=0;i<=valueG.size()-1;i++){
@@ -42,7 +40,6 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
                 e.printStackTrace();
             }
         }
-
 
     @Override
     public void done(int hash, WebSite WS) {
@@ -86,6 +83,5 @@ public class UpToDateServiceIntent extends IntentService implements TaskCallback
         PendingIntent pendingIntent = PendingIntent.getActivity(this,WS.id_WebSite,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setLatestEventInfo(this, " - "+WS.name+" - "+"HAS CHANGED", WS.URL, pendingIntent);
         notificationManager.notify(WS.id_WebSite, notification);
-
     }
 }
